@@ -1,0 +1,82 @@
+/* 
+ * In this file Are opinionated base styles that come in after the normalize Reset.
+ * We may want to merge some of these into the normalize stylesheet if they become common enough.
+ * 
+ * imported by style.scss
+ */
+
+
+:root {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    -webkit-box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	-ms-box-sizing: border-box !important;
+	box-sizing: border-box !important;
+    margin:0;
+    padding:0;
+}
+
+html {
+    font-size: $step-0;
+    scroll-behavior: smooth;
+}
+
+// https://csswizardry.com/2012/06/single-direction-margin-declarations/
+h1, h2, h3, h4, h5, h6, hgroup,
+ul, ol, dd,
+p, figure,
+pre, table, fieldset, hr {
+    margin-top: 0 !important;
+}
+
+p,label{
+    font-family: $main-font;
+    font-weight:400;
+    font-size:$step-0;
+    line-height: 150%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-family: $main-font;
+    font-weight: 800;
+    text-wrap: balance;
+    line-height: 1.25em;
+}
+
+a{
+    font-family: $main-font;
+    font-weight:800;
+    text-decoration: none;
+}
+
+h1{
+    font-size:$step-5;
+}
+
+h2{
+    font-size:$step-4;
+}
+
+h3{
+    font-size:$step-3;
+}
+
+h4{
+    font-size:$step-2;
+}
+
+h5{
+    font-size:$step-1;
+}
+
+body{
+    background-color: var(--bg);
+}

@@ -1,0 +1,92 @@
+/* 
+ * In this file you should declare any global variables
+ * For example: brand colours, typefaces, etc.
+ * imported by style.scss
+ */
+
+// $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ Breakpoints
+// https://css-tricks.com/snippets/sass/mixin-manage-breakpoints/
+// Breakpoints currently set to match Pro Theme breakpoints
+$breakpoints: (
+  'x-small':  ( max-width:  320px ),
+  'small':  ( max-width:  480px ),
+  'medium': ( max-width:  640px ),
+  'up-to-large': ( min-width: 992px ),
+  'large':  ( max-width: 992px ),
+  'xlarge': ( max-width: 1200px ),
+) !default;
+
+/// Mixin to manage responsive breakpoints
+/// @author Hugo Giraudel
+/// @param {String} $breakpoint - Breakpoint name
+/// @require $breakpoints
+@mixin breakpoint($breakpoint) {
+    // If the key exists in the map
+    @if map-has-key($breakpoints, $breakpoint) {
+      // Prints a media query based on the value
+      @media #{inspect(map-get($breakpoints, $breakpoint))} {
+        @content;
+      }
+    }
+    // If the key doesn't exist in the map
+    @else {
+      @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+          + "Available breakpoints are: #{map-keys($breakpoints)}.";
+    }
+  }
+
+// ====================================================== //
+// ============== PADDING AND OTHER THINGS ============== //
+// ====================================================== //
+
+  $border-radius:1rem;
+  $border-radius-1:.5rem;
+
+  $padding-1:1em 7%;
+  $padding-2:5% 10%; 
+
+
+
+
+// ====================================================== //
+// ======================= COLOURS ====================== //
+// ====================================================== //
+
+$primary: #c9c9c9;
+$secondary: #ffffff;
+$accent: #c9c9c940;
+
+
+// ====================================================== //
+// ===================== TYPOGRAPHY ===================== //
+// ====================================================== //
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+$main-font: "Roboto", sans-serif;
+
+// ====================================================== //
+// ======================= MIXINS ======================= //
+// ====================================================== //
+
+@mixin flex($direction,$justify,$align){
+  display:flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+// ====================================================== //
+// ===================== FONT SIZES ===================== //
+// ====================================================== //
+
+// https://utopia.fyi/type/calculator/
+
+$step--2: clamp(0.5208rem, 0.4794rem + 0.2072vw, 0.64rem);
+$step--1: clamp(0.625rem, 0.5641rem + 0.3043vw, 0.8rem);
+$step-0: clamp(0.75rem, 0.663rem + 0.4348vw, 1rem);
+$step-1: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
+$step-2: clamp(1.08rem, 0.9122rem + 0.8391vw, 1.5625rem);
+$step-3: clamp(1.296rem, 1.0674rem + 1.1428vw, 1.9531rem);
+$step-4: clamp(1.5552rem, 1.247rem + 1.5412vw, 2.4414rem);
+$step-5: clamp(1.8662rem, 1.4539rem + 2.0618vw, 3.0518rem);
