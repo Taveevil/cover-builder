@@ -1,37 +1,41 @@
 .cover_letter_container{
     padding:1em;
+   
 }
 
 main#cover_letter{
+    height:100%;
+    width:auto;
     margin:auto auto;
     max-height:1056px;
     max-width:816px;
     background-color: white;
-
     aspect-ratio: 17/22;
 }
 
 
 .cl_template{
-    overflow:hidden;
     container-type: inline-size;
     max-height:100%;
 
     h1{
-        font-size: 10cqw;
+        font-size: clamp(2rem,4rem,10cqw);
     }
 
     h2{
-        font-size: 7cqw;
+        font-size: clamp(1.5rem,2.5rem,6cqw);
     }
 
     h3{
-        font-size: 5cqw;
+        font-size:clamp(1rem,2rem,4cqw);
     }
 
-
+    li{
+        font-size:clamp(.75rem,1rem,3cqw);
+    }
+    
     p{
-        font-size: 2cqw;
+        font-size: clamp(.75rem,1rem,2cqw);
     }
 
 
@@ -64,8 +68,20 @@ main#cover_letter{
         height:auto;
         padding:.5rem 1rem;
 
-        .block__content > *:not(.block__copy){
+        &__info{
             display:none;
+        }
+
+        &__content{
+            max-width:100%;
+        }
+
+        &__copy{
+
+            > *{
+                width:100%;
+            }
+
         }
     }
 

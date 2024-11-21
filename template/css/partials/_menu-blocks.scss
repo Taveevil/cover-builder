@@ -1,0 +1,10 @@
+aside#blocks{
+    max-height:100vh;
+    padding:1em;
+    gap:1em;
+    display:grid;
+    align-items: start;
+    grid-auto-flow: row;
+    grid-auto-rows: minmax(auto,1fr);
+    overflow-y:scroll ;
+}

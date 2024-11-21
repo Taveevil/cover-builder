@@ -1,5 +1,6 @@
 #block-writer{
     position:absolute;
+    z-index:99999;
     inset:0;
     background-color: $accent;
     @include flex(column,center,center);

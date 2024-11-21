@@ -1,8 +1,8 @@
 body{
-    min-height:100vh;
+    max-height:100vh;
     min-width:100vh;
     overflow: hidden;
-    @include flex(row,space-between,center);
+    @include flex(row,space-between,stretch);
     background-color: $accent;
 
     aside{

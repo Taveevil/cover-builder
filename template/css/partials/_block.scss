@@ -1,20 +1,45 @@
-.block{
-    cursor:move;
-    @include flex(fow,space-between,center);
+aside#blocks .block{
+    width:100%;
+    @include flex(column,space-between,center);
+    gap:1em;
 
     &.drag{
         position:absolute;
         pointer-events: none;
     }
 
+    &__info{
+        width:100%;
+        display:grid;
+        grid-template-areas: 
+        "name name controls"
+        "tags tags tags"
+        ;
+    }
+
+    &__name{
+        grid-area:name;
+    }
+
+    &__copy{
+        flex:3;
+        width:100%;
+        @include flex(row,flex-start,flex-start);
+    }
+
     &__controls{
-        @include flex(column,flex-start,flex-start);
+        @include flex(row,space-around,center);
+        flex:1;
+        grid-area:controls;
+    }
+
+    &__tags{
+        grid-area:tags;
+        list-style-type: none;
+        @include flex(row,flex-start,center);
+        gap:.5em;
+
     }
 
 }
 
-.hover_block{
-    position:absolute;
-    background-color: $accent;
-    inset:0;
-}
