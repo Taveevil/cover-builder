@@ -107,12 +107,24 @@ body {
 
 .cl_content {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1em;
 }
 .cl_content.hover::after {
   content: "";
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.116);
+}
+
+.cl_block {
+  background-color: brown;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
 }
 
 #block-writer {

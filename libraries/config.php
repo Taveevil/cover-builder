@@ -12,7 +12,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 $hostname = getenv('HTTP_HOST');
 
 if (str_contains($hostname,'localhost')){
-	$hostname = 'http://localhost/cover-builder';
+	$hostname = 'http://localhost:8888/cover-builder';
 }
 
 // Main site details
