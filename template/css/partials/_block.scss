@@ -1,0 +1,27 @@
+.block{
+    cursor:move;
+
+    &.drag{
+        position:absolute;
+        pointer-events: none;
+    }
+}
+
+.hover_block{
+    position:absolute;
+    background-color: $accent;
+    inset:0;
+}
+
+.cl_content{
+    position:relative;
+
+    &.hover{
+        &::after{
+            content:'';
+            position:absolute;
+            inset:0;
+            background-color:rgba(0, 0, 0, 0.116);
+        }
+    }
+}

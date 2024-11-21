@@ -1,6 +1,19 @@
-<?php include 'template/header.php' ?>
-<body>
+<?php 
+    include 'libraries/config.php';
+    include 'libraries/read.php'; 
+    include 'libraries/write.php'; 
+    include 'libraries/functions.php'; 
+    
 
+    include 'template/header.php';
+
+
+    
+    
+?>
+<body>
+    
+    <?php include 'template/pagelets/block-writer.php' ?>
     <?php include 'template/pagelets/menu-variables.php' ?>
 
     <div class="cover_letter_container">
@@ -11,4 +24,4 @@
 
     <?php include 'template/pagelets/menu-blocks.php' ?>
 
-<?php include 'template/footer.php' ?>
+<?php include 'template/footer.php'; ?>
