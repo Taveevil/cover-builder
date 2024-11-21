@@ -1,36 +1,20 @@
 .block{
     cursor:move;
+    @include flex(fow,space-between,center);
 
     &.drag{
         position:absolute;
         pointer-events: none;
     }
+
+    &__controls{
+        @include flex(column,flex-start,flex-start);
+    }
+
 }
 
 .hover_block{
     position:absolute;
     background-color: $accent;
     inset:0;
-}
-
-.cl_content{
-    position:relative;
-    @include flex(column,flex-start,flex-start);
-    gap:1em;
-
-    &.hover{
-        &::after{
-            content:'';
-            position:absolute;
-            inset:0;
-            background-color:rgba(0, 0, 0, 0.116);
-        }
-    }
-}
-
-.cl_block{
-    background-color: brown;
-    width:100%;
-    height:auto;
-    padding:1rem;
 }

@@ -5,7 +5,7 @@
     }
 
 ?>
-<div class="block" draggable id="<?php echo $block->block_id;?>">
+<div class="block" id="<?php echo $block->block_id;?>">
     <div class="block__content">
         <h4 class="block__name">
         <?php echo $block->name ?>
@@ -22,5 +22,11 @@
         <div class="block__copy" readonly contenteditable="true">
                 <?php echo $block->copy ?>
             </div>
+    </div>
+
+    <div class="block__controls">
+        <span class="handle"></span>
+        <span class="delete"></span>
+        <span class="edit"></span>
     </div>
 </div>

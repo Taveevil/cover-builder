@@ -1,4 +1,4 @@
-<article id="template-1">
+<article class="cl_template" id="template-1">
     <header>
         <h1>
             <span>Tavee</span>
@@ -17,8 +17,8 @@
             <ul>
                 <li class="manager_name"></li>
                 <li class="company_name"></li>
-                <li class="company_phone"></li>
-                <li class="manager_email"></li>
+                <li class="phone"></li>
+                <li class="email"></li>
                 <li class="company_address"></li>
             </ul>
         </div>
@@ -37,7 +37,9 @@
             <span></span>
             <span></span>
         </div>
-        <div class="cl_content">    
+        <div class="cl_content_container">
+            <div class="cl_content">    
+            </div>
         </div>
     </div>
 </article>

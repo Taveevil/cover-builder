@@ -1,7 +1,15 @@
 body{
     min-height:100vh;
     min-width:100vh;
-    display:grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    overflow: hidden;
+    @include flex(row,space-between,center);
     background-color: $accent;
+
+    aside{
+        flex:1;
+    }
+
+    .cover_letter_container{
+        flex:2;
+    }
 }
