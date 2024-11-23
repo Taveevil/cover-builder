@@ -16,11 +16,11 @@
     <?php include 'template/pagelets/block-writer.php' ?>
     <?php include 'template/pagelets/menu-variables.php' ?>
 
-    <div class="cover_letter_container">
-        <main id="cover_letter">
+    <main class="cover_letter_container">
+        <form method="POST" id="cover_letter">
             <?php include 'template/pagelets/templates/template_1.php' ?>
-        </main>
-    </div>
+        </form>
+</main>
 
     <?php include 'template/pagelets/menu-blocks.php' ?>
 

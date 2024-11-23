@@ -7,9 +7,14 @@ body{
 
     aside{
         flex:1;
+        &#blocks{
+            flex:2;
+        }
+
+
     }
 
     .cover_letter_container{
-        flex:2;
+        flex:3;
     }
 }

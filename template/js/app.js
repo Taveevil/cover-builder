@@ -1,21 +1,105 @@
+
+$(document).on('DOMContentLoaded',function(){
+    $('.cl_content').sortable(cl_col_init);
+    $('.cl_content').html(sessionStorage.getItem('cl_content'));    
+    sessionStorage.setItem('blocks',$('#blocks').html());
+
+    let block_col = $('#blocks').sortable({
+        connectWith: ".cl_content",
+        items: "> .block",
+        placeholder: "sortable-placeholder",
+        helper:'clone',
+        handle: '.handle',
+    });
+    
+    let tag_list;
+
+    let get_tags = $.ajax({
+        method:"GET",
+        url:"process/get-tags.php",
+        dataType:"json",
+        async:false
+    }).done(function(response){
+        tag_list = response;
+    })
+    ;
+
+
+    let tag_auto = $('#tag_input').autocomplete({
+        source: tag_list,
+        appendTo: '.tag_auto',
+        select:function(event, ui){
+            let tags_arr = Array.from($('.tag_container .tag'));
+            let contains_tag = (tags_arr.indexOf(ui.item.value) > -1);
+
+            if(!contains_tag){
+                $('.tag_container').append(
+                    `
+                    <div class="tag_content">
+                    <span class="tag">`+
+                    ui.item.value
+                    +`</span>
+                    <button type="button" class="tag_btn btn">
+                        <i class="ph ph-x"></i>
+                    </button>
+                    </div>`
+                )
+
+                $('.tag_btn').on('click',function(){
+                    // console.log($(this).parent('.tag_content'))
+                    $(this).parent('.tag_content').remove();
+                });
+            }
+
+
+        },
+    });
+});
+
 $(document).bind('keypress', function(event) {
 
-    if( event.which === 78 && event.shiftKey ) {
+    if( event.which === 27 && event.shiftKey ) {
         toggleWriter();
+    }
+    if( event.which === 8){
+        sessionStorage.clear();
     }
 });
 
-function toggleWriter(){
-    if($('#block-writer').hasClass('active')){
-        $('#block-writer').removeClass('active');
+function toggleWriter(bool){
+    if(typeof bool !== 'undefined'){
+        switch(bool){
+            case true:
+                $('#block-writer').addClass('active');
+            break;
+            case false:
+                $('#block-writer').removeClass('active');
+            break;
+        }
     }else{
-        $('#block-writer').addClass('active');
+        if($('#block-writer').hasClass('active')){
+            $('#block-writer').removeClass('active');
+        }else{
+            $('#block-writer').addClass('active');
+        }
     }
 }
+
+$(document).ready(function() {
+$(window).keydown(function(event){
+    if(event.keyCode == 13) {
+    event.preventDefault();
+    return false;
+    }
+});
+});
 
 $('#block-writer form').on('submit',function(){
     const clean = DOMPurify.sanitize($('.ql-editor').html());
     $('#block_copy').val(clean);
+
+    const tags = $('.tag_content .tag').toArray().map(t => t.innerHTML);
+    $('#block_tags').val(tags.join(', '));
 });
 
 
@@ -23,22 +107,22 @@ const toolbarOptions = [
     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
     ['blockquote'],
     ['link', 'image', 'video', 'formula'],
-  
+
     [{ 'header': 1 }, { 'header': 2 }],               // custom button values
     [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
     [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
     [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
     [{ 'direction': 'rtl' }],                         // text direction
-  
+
     [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  
+
     [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
     [{ 'font': [] }],
     [{ 'align': [] }],
-  
+
     ['clean']                                         // remove formatting button
-  ];
+];
 
 
 const quill = new Quill('.block_editor', {
@@ -49,7 +133,7 @@ const quill = new Quill('.block_editor', {
     theme: 'snow',
 });
 
-let cl_col = $('.cl_content').sortable({
+let cl_col_init = {
     connectWith: "#blocks",
     revert:"true",
     over:function(event,ui){
@@ -75,17 +159,12 @@ let cl_col = $('.cl_content').sortable({
         } else {
             // your element doesn't have overflow
         }
+        
+        sessionStorage.setItem('cl_content',$('.cl_content').html());
     },
+};
 
-});
 
-let block_col = $('#blocks').sortable({
-    connectWith: ".cl_content",
-    items: "> .block",
-    placeholder: "sortable-placeholder",
-    helper:'clone',
-    handle: '.handle',
-});
 
 function isOverflown(element) {
     return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
@@ -94,9 +173,54 @@ function isOverflown(element) {
 $('form#cl_var').on('input',function(e){
     let target = $(e.target).get(0);
     let id = $(target).attr('id');
-
-
     $('.'+id).html($(target).val());
-
-
 })
+
+$('select#template').on('change',function(){
+    let path = $(this).val();
+
+    let rqst = $.ajax({
+        method:"GET",
+        url:"template/pagelets/templates/"+path,
+        dataType:"html"
+    });
+
+    rqst.done(function(msg){
+        $('#cover_letter').html(msg);
+        if(sessionStorage.getItem('cl_content')){
+            $('.cl_content').html(sessionStorage.getItem('cl_content'));
+        }
+
+        $('.cl_content').sortable(cl_col_init);
+    });
+});
+
+$('.writer_toggle').on('click',(e)=>{
+    e.preventDefault();
+    toggleWriter();
+});
+
+$('#clear').on('click',function(){
+    $('#blocks').html(sessionStorage.getItem('blocks'));
+    $('.cl_content').html('');
+    sessionStorage.clear();
+});
+
+function downloadFile(response) {
+    // console.log(response);
+    var blob = new Blob([response], {type: 'application/pdf'})
+    var url = URL.createObjectURL(blob);
+    location.assign(url);
+  } 
+
+$('#download').on('click',function(){
+    // $.ajax({
+    //     type: 'POST',
+    //     url: 'process/pdf.php',
+    //     data: { content: $('#cover_letter').text()}
+    // }).done(function(response){
+    //     downloadFile(response);
+    // });
+
+    $('#cover_letter').submit();
+});

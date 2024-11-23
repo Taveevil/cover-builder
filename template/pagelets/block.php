@@ -11,17 +11,16 @@
         <?php echo $block->name ?>
         </h4>
         <div class="block__controls">
-            <span class="handle"><i class="ph ph-arrows-out-cardinal"></i></span>
-            <span class="delete"><i class="ph ph-trash"></i></span>
-            <span class="edit"><i class="ph ph-pen-nib"></i></span>
+            <span class="btn handle"><i class="ph ph-arrows-out-cardinal"></i></span>
+            <button class="btn delete"><i class="ph ph-trash"></i></button>
+            <button class="btn edit"><i class="ph ph-pen-nib"></i></button>
         </div>
         <ul class="block__tags">
             <?php 
             if(isset($block_tags)):
-            foreach($block_tags as $tag_id):
-                $tag = mysql_read_tag_xid($tag_id);
+                foreach($block_tags as $tag):
             ?>
-                <li><?php echo $tag->name;?></li>
+                <li><?php echo $tag;?></li>
             <?php endforeach; endif; ?>
         </ul>
     </div>

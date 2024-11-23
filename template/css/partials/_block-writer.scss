@@ -6,22 +6,96 @@
     @include flex(column,center,center);
     pointer-events: none;
     opacity: 0;
+    transform: translateY(-5px);
     transition: all .2s ease-in-out;
-    
-    form{
+
+    .content{
+        position:relative;
         height:50vh;
         width:50vw;
-        padding:1em;
-        border-radius: 1em;
-        box-shadow: 2px 2px 4px $accent;
-        background-color: white;
+    }
+    
+    form{
+        width:100%;
+        height:100%;
         @include flex(column,flex-start,flex-start);
         gap:1em;
+
+        header{
+            @include flex(row,space-between,center);
+            gap:.5em;
+            width:100%;
+            background-color: $white;
+            padding:1em;
+            border-radius: .5em;
+            box-shadow: 2px 2px 4px $accent;
+
+            #block_name{
+                background-color: unset;
+                border:unset;
+                font-size:$step-2;
+                width:100%;
+            }
+
+            input{
+                box-shadow: unset;
+            }
+
+            button{
+                padding:1em;
+            }
+        }
+
+
+        .block_content_container{
+            @include flex(column,flex-start,flex-start);
+            gap:1em;
+            background-color: $white;
+            padding:1em;
+            border-radius: .5em;
+            box-shadow: 2px 2px 4px $accent;
+        }
+
+
+        .block_copy_container{
+            @include flex(column,flex-start,flex-start);
+            width:100%;
+
+            .ql-toolbar{
+                width:100%;
+            }
+
+            .block_editor{
+                width:100%;
+
+            }
+        }
+
+        .tags{
+            @include flex(column,flex-start,flex-start);
+            gap:1em;
+        }
+
+        
+        .tag_container{
+            @include flex(row,flex-start,center);
+            gap:1em;
+
+            .tag_content{
+                @include flex(row,flex-start,center);
+                gap:1em;
+                font-family: $main-font;
+                padding:.5em;
+                background-color: $accent;
+                border-radius: .5em;
+            }
+        }
     }
 
     &.active{
         pointer-events: all;
         opacity: 1;
-        transition: all .2s ease-in-out;
+        transform: translateY(0);
+        transition:0.2s cubic-bezier(0.42, 0, 0.25, 1.89);
     }
 }

@@ -2,6 +2,11 @@ aside#blocks .block{
     width:100%;
     @include flex(column,space-between,center);
     gap:1em;
+    background-color: $white;
+    border-radius: .5em;
+    padding:1em;
+    border:1px solid $accent;
+    box-shadow: 0 2px 4px $accent;
 
     &.drag{
         position:absolute;
@@ -11,6 +16,7 @@ aside#blocks .block{
     &__info{
         width:100%;
         display:grid;
+        gap:1em;
         grid-template-areas: 
         "name name controls"
         "tags tags tags"
@@ -24,11 +30,16 @@ aside#blocks .block{
     &__copy{
         flex:3;
         width:100%;
-        @include flex(row,flex-start,flex-start);
+        @include flex(column,flex-start,flex-start);
+
+        span{
+            background-color: unset
+        }
     }
 
     &__controls{
-        @include flex(row,space-around,center);
+        @include flex(row,flex-end,center);
+        gap:1em;
         flex:1;
         grid-area:controls;
     }
@@ -39,7 +50,23 @@ aside#blocks .block{
         @include flex(row,flex-start,center);
         gap:.5em;
 
+
+        li{
+            padding:.5em;
+            border-radius: .5em;
+            box-shadow: 0 2px 2px $accent;
+            background-color: $accent;
+            border: solid 1px $accent;
+        }
     }
 
 }
 
+.ui-sortable-helper{
+    &::after{
+        content:'';
+        z-index:999;
+        inset:0;
+        background-color: $accent;
+    }
+}

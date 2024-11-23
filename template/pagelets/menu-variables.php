@@ -1,40 +1,59 @@
+<?php 
+    $path = 'template/pagelets/templates';
+    $templates =array_slice(scandir($path),2);
+?>
+
 <aside id="variables">
     <form action="">
-        <select name="" id="">
-            
-        </select>
+        <div class="input_container">
+            <label for="template">Cover Letter Templates</label>
+            <select name="template" id="template">
+                <?php 
+                    foreach($templates as $template):
+                ?>
+                <option value="<?php echo $template?>"><?php echo str_replace(['.php','_'],' ',$template)?></option>
+
+                <?php endforeach; ?>
+            </select>
+        </div>
     </form>
 
     <form id="cl_var" action="">
-        <label for="company_name">
-            <h4>Company name</h4>
-            <input id="company_name" name="company_name" type="text">
-        </label>
+        <div class="input_container">
+            <label for="company_name">Company name</label>
+            <input id="company_name" name="company_name" type="text" placeholder="Fake company co">
+        </div>
 
-        <label for="company_address">
-            <h4>Company Address</h4>
-            <input id="company_address" name="company_address" type="text">
-        </label>
+        <div class="input_container">
+            <label for="company_address">Company Address</label>
+            <input id="company_address" name="company_address" type="text" placeholder="123 Fake St.">
+        </div>
 
-        <label for="manager_name">
-            <h4>Hiring manager name</h4>
-            <input id="manager_name" name="manager_name" type="text">
-        </label>
+        <div class="input_container">
+            <label for="manager_name">Hiring manager name</label>
+            <input id="manager_name" name="manager_name" type="text" placeholder="John Doe">
+        </div>
 
-        <label for="phone">
-            <h4>Phone Number</h4>
-            <input id="phone" name="phone" type="text">
-        </label>
-
-        <label for="email">
-            <h4>Email</h4>
-            <input id="email" name="email" type="text">
-        </label>
-
-        <label for="position">
-            <h4>Position</h4>
-            <input id="position" name="position" type="text">
-        </label>
+        <div class="input_container">
+            <label for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="(123)123-1234">
+        </div>
+        <div class="input_container">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="text" placeholder="email@email.com">
+        </div>
+        <div class="input_container">
+            <label for="position">Position</label>
+            <input id="position" name="position" type="text" placeholder="CEO">
+        </div>
     </form>
+
+    <div class="controls">
+        <button class="btn writer_toggle"><i class="ph ph-pencil"></i></button>
+        <button id="clear" class="btn"><i class="ph ph-backspace"></i></button>
+        <button id="download" class="btn"><i class="ph ph-download"></i></button>
+                        
+    </div>
+
 
 </aside>

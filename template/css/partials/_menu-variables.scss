@@ -1,0 +1,54 @@
+aside#variables{
+    @include flex(column,flex-start,flex-start);
+    background-color: $white;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.151);
+    gap:1em;
+    padding:1em;
+
+    form{
+        width:100%;
+        @include flex(column,flex-start,flex-start);
+        gap:1em;
+
+        .input_container{
+            @include flex(column,flex-start,flex-start);
+            width:100%;
+        }
+
+        input{
+            width:100%;
+            padding:.25em;
+        }
+
+        label{
+            font-size:$step-1;
+            font-weight:600;
+        }
+        
+
+        .tags{
+            @include flex(column,flex-start,flex-start);
+            gap:1em;
+        }
+    }
+}
+
+.tag_auto{
+    @include flex(column,flex-start,flex-start);
+    gap:.5em;
+
+    ul{
+        list-style-type: none !important;
+     
+    }
+
+    li{
+        padding:1em;
+        cursor: pointer;
+        &:hover{
+            background-color: $accent;
+        }
+    }
+}
+
+.ui-helper-hidden-accessible { display:none; }

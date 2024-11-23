@@ -1,0 +1,28 @@
+.btn{
+    box-shadow: 0 1px 5px rgba($accent, 0.1);
+    border-radius:.5em;
+    border:1px solid $black;
+    background-color: $white;
+    color:$black;
+    padding:.5em 1em;
+    cursor: pointer;
+    transition:all .2s ease-in-out; 
+
+    &:hover{
+        background-color: $accent;
+        transform: translateY(-2px);
+    }
+}
+
+
+select,
+input[type=text],
+input[type=tel]{
+    box-shadow: 0 1px 5px rgba($accent, 0.1);
+    border-radius:.5em;
+    border:1px solid $black;
+    background-color: $white;
+    color:$black;
+    padding: .5em 1em;
+    transition:all .2s ease-in-out; 
+}
