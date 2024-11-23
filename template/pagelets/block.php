@@ -1,11 +1,9 @@
 <?php 
-
     if($block->tags){
         $block_tags = explode(',',$block->tags);
     }
-
 ?>
-<div class="block" id="<?php echo $block->block_id;?>">
+<div class="block" data-block="<?php echo $block->block_id;?>">
     <div class="block__info">
         <h4 class="block__name">
         <?php echo $block->name ?>
@@ -24,8 +22,6 @@
             <?php endforeach; endif; ?>
         </ul>
     </div>
-
-
     <div class="block__copy" readonly contenteditable="true">
         <?php echo $block->copy ?>
     </div>

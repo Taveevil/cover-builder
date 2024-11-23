@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 article#template-1{
-    padding:48px;
+    padding:10%;
     height:100%;
     width:100%;
     display:grid;
@@ -39,11 +39,12 @@ article#template-1{
     }
 
     h1{
+        font-size:3em;
         color:$primary;
     }
 
     h2{
-        font-size:$step-1;
+        font-size:1.5em;
         font-weight:400;
         color:$secondary;
     }

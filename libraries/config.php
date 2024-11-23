@@ -11,8 +11,19 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 $hostname = getenv('HTTP_HOST');
 
+$user_agent = getenv("HTTP_USER_AGENT");
+
+
 if (str_contains($hostname,'localhost')){
-	$hostname = 'http://localhost:8888/cover-builder';
+	if(strpos($user_agent, "Win") !== FALSE){
+		$os = "Windows";
+		$hostname = 'http://localhost/cover-builder';
+
+	}
+	elseif(strpos($user_agent, "Mac") !== FALSE){
+		$os = "Mac";
+		$hostname = 'http://localhost:8888/cover-builder';
+	}
 }
 
 // Main site details

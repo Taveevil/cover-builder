@@ -1,8 +1,6 @@
 
 $(document).on('DOMContentLoaded',function(){
     $('.cl_content').sortable(cl_col_init);
-    $('.cl_content').html(sessionStorage.getItem('cl_content'));    
-    sessionStorage.setItem('blocks',$('#blocks').html());
 
     let block_col = $('#blocks').sortable({
         connectWith: ".cl_content",
@@ -13,7 +11,6 @@ $(document).on('DOMContentLoaded',function(){
     });
     
     let tag_list;
-
     let get_tags = $.ajax({
         method:"GET",
         url:"process/get-tags.php",
@@ -21,8 +18,7 @@ $(document).on('DOMContentLoaded',function(){
         async:false
     }).done(function(response){
         tag_list = response;
-    })
-    ;
+    });
 
 
     let tag_auto = $('#tag_input').autocomplete({
@@ -50,10 +46,22 @@ $(document).on('DOMContentLoaded',function(){
                     $(this).parent('.tag_content').remove();
                 });
             }
-
-
         },
     });
+    
+});
+
+
+
+$(window).on('resize',function(){
+    let cl = $('#cover_letter');
+    let container = $('.cover_letter_container');
+
+    let width = $(container).width();
+    let max_width = 816;
+    let mult = width < max_width ? (width/max_width) * 100 : 100;
+
+    $(cl).css('transform','scale('+mult+'%)');
 });
 
 $(document).bind('keypress', function(event) {
@@ -149,7 +157,7 @@ let cl_col_init = {
 
         $('.cl_content .block').each(function(){
             let copy = $(this).find('.block__copy p').get(0);
-            $(copy).html($(copy).text());
+            $(copy).html(decodeHtml($(copy).html()));
         });
 
 
@@ -164,6 +172,11 @@ let cl_col_init = {
     },
 };
 
+function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+}
 
 
 function isOverflown(element) {
@@ -201,26 +214,13 @@ $('.writer_toggle').on('click',(e)=>{
 });
 
 $('#clear').on('click',function(){
-    $('#blocks').html(sessionStorage.getItem('blocks'));
+    $.ajax({
+        method: 'GET',
+        url:'process/get-blocks.php',
+        dataType:'html',
+    }).done(function(response){
+        $('#blocks').html(response);
+    });
     $('.cl_content').html('');
     sessionStorage.clear();
-});
-
-function downloadFile(response) {
-    // console.log(response);
-    var blob = new Blob([response], {type: 'application/pdf'})
-    var url = URL.createObjectURL(blob);
-    location.assign(url);
-  } 
-
-$('#download').on('click',function(){
-    // $.ajax({
-    //     type: 'POST',
-    //     url: 'process/pdf.php',
-    //     data: { content: $('#cover_letter').text()}
-    // }).done(function(response){
-    //     downloadFile(response);
-    // });
-
-    $('#cover_letter').submit();
 });

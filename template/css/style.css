@@ -85,8 +85,8 @@ body {
 }
 
 body {
-  max-height: 100vh;
-  min-width: 100vh;
+  min-height: 100vh;
+  min-width: 100vw;
   overflow: hidden;
   display: flex;
   flex-direction: row;
@@ -386,11 +386,15 @@ aside#variables form .tags {
 
 .cover_letter_container {
   padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 form#cover_letter {
-  height: 100%;
-  width: auto;
+  height: auto;
+  width: 100%;
   margin: auto auto;
   max-height: 1056px;
   max-width: 816px;
@@ -402,20 +406,11 @@ form#cover_letter {
   container-type: inline-size;
   max-height: 100%;
 }
-.cl_template h1 {
-  font-size: clamp(2rem, 4rem, 10cqw);
-}
-.cl_template h2 {
-  font-size: clamp(1.5rem, 2.5rem, 6cqw);
-}
-.cl_template h3 {
-  font-size: clamp(1rem, 2rem, 4cqw);
-}
-.cl_template li {
-  font-size: clamp(0.75rem, 1rem, 3cqw);
-}
-.cl_template p {
-  font-size: clamp(0.75rem, 1rem, 2cqw);
+.cl_template h1, .cl_template h2, .cl_template h3, .cl_template h4, .cl_template h5, .cl_template h6, .cl_template hgroup,
+.cl_template ul, .cl_template ol, .cl_template dd,
+.cl_template p, .cl_template figure,
+.cl_template pre, .cl_template table, .cl_template fieldset, .cl_template hr {
+  font-size: unset;
 }
 
 .cl_content_container {
@@ -463,7 +458,7 @@ form#cover_letter {
 }
 
 article#template-1 {
-  padding: 48px;
+  padding: 10%;
   height: 100%;
   width: 100%;
   display: grid;
@@ -492,10 +487,11 @@ article#template-1 header {
   grid-area: header;
 }
 article#template-1 h1 {
+  font-size: 3em;
   color: #3670B7;
 }
 article#template-1 h2 {
-  font-size: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
+  font-size: 1.5em;
   font-weight: 400;
   color: #E74425;
 }
