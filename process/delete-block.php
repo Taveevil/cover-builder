@@ -1,7 +1,8 @@
-<?php 
+
+<?php
 
 // ##################################################################### //
-// ######################### NEW BLOCK PROCESS ######################### //
+// ######################## DELETE BLOCK PROCESS ####################### //
 // ##################################################################### //
 
 include '../libraries/config.php';
@@ -9,17 +10,9 @@ include '../libraries/read.php';
 include '../libraries/write.php'; 
 include '../libraries/functions.php'; 
 
+
 $rqst = rqst($_POST);
 
-mysql_write_new_block(
-    $rqst['block_name'],
-    $_POST['block_copy'],
-    $rqst['block_tags']
-);
-
-// pretty_print($rqst);
-
-header('Location: '.$site['url'].'/index.php');
-exit();
+echo mysql_delete_block($rqst['block_id']);
 
 ?>

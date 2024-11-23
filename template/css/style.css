@@ -278,13 +278,49 @@ aside#blocks .block__tags li {
   width: 100%;
 }
 #block-writer form .tags {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 1em;
 }
+#block-writer form .tags .tag_input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+}
+#block-writer form .tags .tag_input-container .tag_auto {
+  position: relative !important;
+  gap: 0.5em;
+  height: 100%;
+  width: 100%;
+}
+#block-writer form .tags .tag_input-container .tag_auto ul {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: scroll;
+  list-style-type: none !important;
+  top: 0 !important;
+  left: 0 !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+#block-writer form .tags .tag_input-container .tag_auto li {
+  padding: 1em;
+  cursor: pointer;
+}
+#block-writer form .tags .tag_input-container .tag_auto li:hover {
+  background-color: rgba(201, 201, 201, 0.2509803922);
+}
 #block-writer form .tag_container {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -302,6 +338,19 @@ aside#blocks .block__tags li {
   background-color: rgba(201, 201, 201, 0.2509803922);
   border-radius: 0.5em;
 }
+#block-writer form .submit_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1em;
+}
+#block-writer form .submit_container input[type=submit].btn {
+  display: none;
+}
+#block-writer form .submit_container input[type=submit].btn.active {
+  display: block;
+}
 #block-writer.active {
   pointer-events: all;
   opacity: 1;
@@ -309,15 +358,18 @@ aside#blocks .block__tags li {
   transition: 0.2s cubic-bezier(0.42, 0, 0.25, 1.89);
 }
 
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
 aside#blocks {
   max-height: 100vh;
   padding: 1em;
   gap: 1em;
-  display: grid;
-  align-items: start;
-  grid-auto-flow: row;
-  grid-auto-rows: minmax(auto, 1fr);
-  grid-template-columns: minmax(auto, 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   overflow-y: scroll;
 }
 
@@ -360,28 +412,6 @@ aside#variables form .tags {
   justify-content: flex-start;
   align-items: flex-start;
   gap: 1em;
-}
-
-.tag_auto {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 0.5em;
-}
-.tag_auto ul {
-  list-style-type: none !important;
-}
-.tag_auto li {
-  padding: 1em;
-  cursor: pointer;
-}
-.tag_auto li:hover {
-  background-color: rgba(201, 201, 201, 0.2509803922);
-}
-
-.ui-helper-hidden-accessible {
-  display: none;
 }
 
 .cover_letter_container {

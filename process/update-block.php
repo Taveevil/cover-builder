@@ -1,3 +1,4 @@
+
 <?php 
 
 // ##################################################################### //
@@ -11,7 +12,7 @@ include '../libraries/functions.php';
 
 $rqst = rqst($_POST);
 
-mysql_write_new_block(
+mysql_update_block(
     $rqst['block_name'],
     $_POST['block_copy'],
     $rqst['block_tags']

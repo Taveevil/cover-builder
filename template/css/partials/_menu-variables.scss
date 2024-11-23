@@ -33,22 +33,3 @@ aside#variables{
     }
 }
 
-.tag_auto{
-    @include flex(column,flex-start,flex-start);
-    gap:.5em;
-
-    ul{
-        list-style-type: none !important;
-     
-    }
-
-    li{
-        padding:1em;
-        cursor: pointer;
-        &:hover{
-            background-color: $accent;
-        }
-    }
-}
-
-.ui-helper-hidden-accessible { display:none; }

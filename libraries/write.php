@@ -23,30 +23,47 @@ function mysql_write_new_block($name = '', $copy = '', $tags = '') {
 	return $id;
 }
 
-
-/* mysql_write_new_block_tag: 
-Create a block_tag in the database
-*/
-function mysql_write_new_block_tag($block_id = '', $tag_id = '') {
+function mysql_update_block($block_id = 0,$name = '', $copy = '', $tags = '') {
 	global $pdo;
 	
 	mysql_cxn();
 	
 	try {
-		$sql = "INSERT INTO block_tags (block_id, tag_id) VALUES (:block_id, :tag_id)";
+		$sql = "UPDATE blocks SET name=:name, copy=:copy, tags=:tags WHERE block_id=:block_id";
 
 		$pdo->prepare($sql)->execute([
-			'block_id' => $block_id,
-			'tag_id' => $tag_id
+			'block_id' => intval($block_id),
+			'name' => $name,
+			'copy' => $copy,
+			'tags' => $tags
 		]);
 
-		$id = $pdo->lastInsertId();
 	}
 	catch(PDOException $exception){ 
 		echo $exception->getMessage(); 
 	}	
-	
-	return $id;
+	return true;
+}
+
+// This function deletes the block from the database
+function mysql_delete_block($block_id = 0){
+	global $pdo;
+
+	mysql_cxn();
+
+	try{
+		$sql = "UPDATE blocks SET trashed='y' WHERE block_id=:block_id";
+		
+		$pdo->prepare($sql)->execute([
+			'block_id' => intval($block_id)
+		]);
+
+	}catch(PDOException $exception){
+		echo $exception->getMessage(); 
+	}
+
+	return true;
+
 }
 
 ?>

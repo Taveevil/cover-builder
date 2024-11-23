@@ -72,12 +72,46 @@
         }
 
         .tags{
-            @include flex(column,flex-start,flex-start);
+            width:100%;
+            @include flex(column,flex-start,stretch);
             gap:1em;
+
+            .tag_input-container{
+                width:100%;
+                @include flex(row,flex-start,center);
+                gap:.5em;
+
+                .tag_auto{
+                    position:relative !important;
+                    gap:.5em;
+                    height:100%;
+                    width:100%;
+                
+                    ul{
+                        width:100%;
+                        max-width: 100%;
+                        overflow-x: scroll;
+                        list-style-type: none !important;
+                        top:0 !important;
+                        left:0 !important;
+                        @include flex(row,flex-start,flex-start);
+                        gap:.5em;
+                    }
+                
+                    li{
+                        padding:1em;
+                        cursor: pointer;
+                        &:hover{
+                            background-color: $accent;
+                        }
+                    }
+                }    
+            }
         }
 
         
         .tag_container{
+            position:relative;
             @include flex(row,flex-start,center);
             gap:1em;
 
@@ -89,7 +123,23 @@
                 background-color: $accent;
                 border-radius: .5em;
             }
+
+        
         }
+
+        .submit_container{
+            @include flex(row,flex-start,center);
+            gap:1em;
+            
+            input[type=submit].btn{
+                display:none;
+    
+                &.active{
+                    display:block;
+                }
+            }
+        }
+
     }
 
     &.active{
@@ -99,3 +149,8 @@
         transition:0.2s cubic-bezier(0.42, 0, 0.25, 1.89);
     }
 }
+
+
+
+
+.ui-helper-hidden-accessible { display:none; }

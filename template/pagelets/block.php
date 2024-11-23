@@ -1,6 +1,8 @@
 <?php 
     if($block->tags){
         $block_tags = explode(',',$block->tags);
+    }else{
+        $block_tags = [];
     }
 ?>
 <div class="block" data-block="<?php echo $block->block_id;?>">

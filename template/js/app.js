@@ -29,28 +29,32 @@ $(document).on('DOMContentLoaded',function(){
             let contains_tag = (tags_arr.indexOf(ui.item.value) > -1);
 
             if(!contains_tag){
-                $('.tag_container').append(
-                    `
-                    <div class="tag_content">
-                    <span class="tag">`+
-                    ui.item.value
-                    +`</span>
-                    <button type="button" class="tag_btn btn">
-                        <i class="ph ph-x"></i>
-                    </button>
-                    </div>`
-                )
-
-                $('.tag_btn').on('click',function(){
-                    // console.log($(this).parent('.tag_content'))
-                    $(this).parent('.tag_content').remove();
-                });
+                create_tag(ui.item.value)
             }
         },
     });
     
 });
 
+
+function create_tag(tag){
+    $('.tag_container').append(
+        `
+        <div class="tag_content">
+        <span class="tag">`+
+        tag
+        +`</span>
+        <button type="button" class="tag_btn btn">
+            <i class="ph ph-x"></i>
+        </button>
+        </div>`
+    )
+
+    $('.tag_btn').on('click',function(){
+        // console.log($(this).parent('.tag_content'))
+        $(this).parent('.tag_content').remove();
+    });
+}
 
 
 $(window).on('resize',function(){
@@ -64,33 +68,44 @@ $(window).on('resize',function(){
     $(cl).css('transform','scale('+mult+'%)');
 });
 
-$(document).bind('keypress', function(event) {
-
-    if( event.which === 27 && event.shiftKey ) {
+$(document).on('keyup', function(event) {
+    
+    if( event.key === 'Escape'){
         toggleWriter();
-    }
-    if( event.which === 8){
-        sessionStorage.clear();
     }
 });
 
 function toggleWriter(bool){
-    if(typeof bool !== 'undefined'){
-        switch(bool){
-            case true:
-                $('#block-writer').addClass('active');
-            break;
-            case false:
-                $('#block-writer').removeClass('active');
-            break;
-        }
-    }else{
-        if($('#block-writer').hasClass('active')){
+
+      sessionStorage.clear();
+
+
+        if($('#block-writer').hasClass('active') || bool == false){
             $('#block-writer').removeClass('active');
+
+            if(!$('#block-writer #update_block').hasClass('active')){
+                // sessionStorage.setItem('write_cache',$('#block-writer').html());
+            }
+            
+            setTimeout(() => {
+                $('#block-writer .tag_container').html('');
+                $('#block-writer #tag_input').val('');
+                $('#block-writer .block_editor .ql-editor').html('');
+                $('#block-writer #block_name').val('');
+                $('.btn#update_block').removeClass('active');
+            }, 200);
         }else{
+
+            if(!$('#block-writer #update_block').hasClass('active')){
+                // $('#block-writer').html(sessionStorage.getItem('write_cache'));
+            }
+
             $('#block-writer').addClass('active');
         }
-    }
+
+        
+
+  
 }
 
 $(document).ready(function() {
@@ -102,13 +117,16 @@ $(window).keydown(function(event){
 });
 });
 
-$('#block-writer form').on('submit',function(){
+$('#block-writer form').on('submit',function(e){
     const clean = DOMPurify.sanitize($('.ql-editor').html());
     $('#block_copy').val(clean);
 
     const tags = $('.tag_content .tag').toArray().map(t => t.innerHTML);
     $('#block_tags').val(tags.join(', '));
+
 });
+
+
 
 
 const toolbarOptions = [
@@ -224,3 +242,52 @@ $('#clear').on('click',function(){
     $('.cl_content').html('');
     sessionStorage.clear();
 });
+
+$('.btn.delete').on('click',function(){
+    let block = $(this).closest('.block');
+    let id = $(block).attr('data-block');
+
+    $.ajax({
+        url:'process/delete-block.php',
+        method:"POST",
+        data:{
+            block_id : id
+        },
+    }).done(function(response){
+        $(block).remove();
+    }).fail(function(response){
+        console.log(response);
+        alert('oops! Something went wrong');
+    });
+});
+
+$('.btn.edit').on('click',function(){
+    let block = $(this).closest('.block');
+    let id = $(block).attr('data-block');
+
+    let copy = $(block).find('.block__copy').html();
+    let name = $(block).find('.block__name').html();
+    let tags = $(block).find('.block__tags li').toArray().map(li => li.innerHTML);
+
+
+    $('#block-writer #block_name').val(name);
+    $('#block-writer .block_editor .ql-editor').html(copy);
+    $(tags).each(function(tag){
+        create_tag(tag);
+    });
+    $('.btn#update_block').addClass('active');
+
+    toggleWriter(true);
+});
+
+$('#block-writer .submit_container .btn').on('click',function(e){
+    
+    if($(this).attr('id','create_block')){
+        $('#writer').attr('action','process/new-block.php');
+
+    }else if($(this).attr('id','update_block')) {
+        $('#writer').attr('action','process/update-block.php');
+    }
+    $('#block-writer form').trigger('submit');
+});
+
