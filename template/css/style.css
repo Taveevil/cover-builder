@@ -10,8 +10,6 @@
  * 
  * imported by style.scss
  */
-@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 :root {
   box-sizing: border-box;
 }
@@ -38,7 +36,7 @@ pre, table, fieldset, hr {
 p, label, li {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
-  font-size: clamp(0.75rem, 0.663rem + 0.4348vw, 1rem);
+  font-size: clamp(0.625rem, 0.5641rem + 0.3043vw, 0.8rem);
   line-height: 150%;
 }
 
@@ -78,10 +76,6 @@ h4 {
 
 h5 {
   font-size: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
-}
-
-body {
-  background-color: var(--bg);
 }
 
 body {
@@ -172,7 +166,7 @@ aside#blocks .block__controls {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  align-items: center;
+  align-items: stretch;
   gap: 1em;
   flex: 1;
   grid-area: controls;
@@ -422,7 +416,7 @@ aside#variables form .tags {
   align-items: center;
 }
 
-form#cover_letter {
+#cover_letter {
   height: auto;
   width: 100%;
   margin: auto auto;
@@ -435,12 +429,6 @@ form#cover_letter {
 .cl_template {
   container-type: inline-size;
   max-height: 100%;
-}
-.cl_template h1, .cl_template h2, .cl_template h3, .cl_template h4, .cl_template h5, .cl_template h6, .cl_template hgroup,
-.cl_template ul, .cl_template ol, .cl_template dd,
-.cl_template p, .cl_template figure,
-.cl_template pre, .cl_template table, .cl_template fieldset, .cl_template hr {
-  font-size: unset;
 }
 
 .cl_content_container {
@@ -469,6 +457,12 @@ form#cover_letter {
   width: 100%;
   height: auto;
   padding: 0.5rem 1rem;
+  transition: background-color 0.1s ease-in-out;
+  border-radius: 0.5em;
+  cursor: move;
+}
+.cl_content .block:hover {
+  background-color: rgba(201, 201, 201, 0.2509803922);
 }
 .cl_content .block__info {
   display: none;
@@ -485,201 +479,4 @@ form#cover_letter {
   width: 100%;
   height: auto;
   padding: 1em;
-}
-
-article#template-1 {
-  padding: 10%;
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-areas: "header header" "col-1 col-2";
-  grid-template-rows: min-content minmax(auto, 100%);
-  grid-template-columns: 30% minmax(auto, 100%);
-  grid-gap: 1em;
-}
-article#template-1 h1,
-article#template-1 h2,
-article#template-1 h3,
-article#template-1 h4,
-article#template-1 h5,
-article#template-1 h6,
-article#template-1 p,
-article#template-1 label,
-article#template-1 a,
-article#template-1 li {
-  font-family: "Work Sans", sans-serif !important;
-}
-article#template-1 p,
-article#template-1 li {
-  line-height: 150%;
-}
-article#template-1 header {
-  grid-area: header;
-}
-article#template-1 h1 {
-  font-size: 3em;
-  color: #3670B7;
-}
-article#template-1 h2 {
-  font-size: 1.5em;
-  font-weight: 400;
-  color: #E74425;
-}
-article#template-1 .contact {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 0.5em;
-  max-width: 100%;
-  padding: 1em;
-  color: #3670B7;
-}
-article#template-1 .contact ul {
-  width: 100%;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-article#template-1 .contact ul li {
-  display: inline-block;
-  word-wrap: break-word;
-  width: 100%;
-}
-article#template-1 .seperator {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 1em;
-}
-article#template-1 .seperator span {
-  display: block;
-}
-article#template-1 .seperator span:nth-child(1), article#template-1 .seperator span:nth-child(3) {
-  width: 8px;
-  height: auto;
-  aspect-ratio: 1/1;
-  outline: solid 2px #3670B7;
-}
-article#template-1 .seperator span:nth-child(2) {
-  flex: 2;
-  background-color: #3670B7;
-  height: 2px;
-}
-article#template-1 .column {
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-article#template-1 #column-1 {
-  grid-area: col-1;
-}
-article#template-1 #column-2 {
-  grid-area: col-2;
-}
-
-article#template-2 {
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-areas: "header header" "col-1 col-2";
-  grid-template-rows: min-content minmax(auto, 100%);
-  grid-template-columns: 30% minmax(auto, 100%);
-  grid-gap: 1em;
-  padding: 1em;
-}
-article#template-2 h1,
-article#template-2 h2,
-article#template-2 h3,
-article#template-2 h4,
-article#template-2 h5,
-article#template-2 h6,
-article#template-2 p,
-article#template-2 label,
-article#template-2 a,
-article#template-2 li {
-  font-family: "Work Sans", sans-serif !important;
-}
-article#template-2 p,
-article#template-2 li {
-  line-height: 150%;
-}
-article#template-2 header {
-  grid-area: header;
-}
-article#template-2 h1 {
-  color: black;
-}
-article#template-2 h2 {
-  font-size: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
-  font-weight: 400;
-  color: red;
-}
-article#template-2 .contact {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 0.5em;
-  max-width: 100%;
-  padding: 1em;
-  color: black;
-}
-article#template-2 .contact ul {
-  width: 100%;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-article#template-2 .contact ul li {
-  display: inline-block;
-  word-wrap: break-word;
-  width: 100%;
-}
-article#template-2 .seperator {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 1em;
-}
-article#template-2 .seperator span {
-  display: block;
-}
-article#template-2 .seperator span:nth-child(1), article#template-2 .seperator span:nth-child(3) {
-  width: 8px;
-  height: auto;
-  aspect-ratio: 1/1;
-  outline: solid 2px black;
-}
-article#template-2 .seperator span:nth-child(2) {
-  flex: 2;
-  background-color: black;
-  height: 2px;
-}
-article#template-2 .column {
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-article#template-2 #column-1 {
-  grid-area: col-1;
-}
-article#template-2 #column-2 {
-  grid-area: col-2;
 }/*# sourceMappingURL=style.css.map */

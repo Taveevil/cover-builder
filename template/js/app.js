@@ -33,6 +33,8 @@ $(document).on('DOMContentLoaded',function(){
             }
         },
     });
+
+    initEditButton();
     
 });
 
@@ -174,7 +176,7 @@ let cl_col_init = {
         let cl_content = $('.cl_content').get(0);
 
         $('.cl_content .block').each(function(){
-            let copy = $(this).find('.block__copy p').get(0);
+            let copy = $(this).find('.block__copy').get(0);
             $(copy).html(decodeHtml($(copy).html()));
         });
 
@@ -240,6 +242,7 @@ $('#clear').on('click',function(){
         $('#blocks').html(response);
     });
     $('.cl_content').html('');
+    initEditButton();
     sessionStorage.clear();
 });
 
@@ -261,33 +264,38 @@ $('.btn.delete').on('click',function(){
     });
 });
 
-$('.btn.edit').on('click',function(){
-    let block = $(this).closest('.block');
-    let id = $(block).attr('data-block');
 
-    let copy = $(block).find('.block__copy').html();
-    let name = $(block).find('.block__name').html();
-    let tags = $(block).find('.block__tags li').toArray().map(li => li.innerHTML);
-
-
-    $('#block-writer #block_name').val(name);
-    $('#block-writer .block_editor .ql-editor').html(copy);
-    $(tags).each(function(tag){
-        create_tag(tag);
+function initEditButton(){
+    $('.btn.edit').on('click',function(){
+        let block = $(this).closest('.block');
+        let id = $(block).attr('data-block');
+    
+        let copy = $(block).find('.block__copy').html();
+        let name = $(block).find('.block__name').html();
+        let tags = $(block).find('.block__tags li').toArray().map(li => li.innerHTML);
+        
+        $('#block-writer #block_id').val(id);
+        $('#block-writer #block_name').val(name);
+        $('#block-writer .block_editor .ql-editor').html(copy);
+        $(tags).each(function(tag){
+            create_tag(tag);
+        });
+        $('.btn#update_block').addClass('active');
+    
+        toggleWriter(true);
     });
-    $('.btn#update_block').addClass('active');
+}
 
-    toggleWriter(true);
-});
 
 $('#block-writer .submit_container .btn').on('click',function(e){
-    
-    if($(this).attr('id','create_block')){
-        $('#writer').attr('action','process/new-block.php');
 
-    }else if($(this).attr('id','update_block')) {
+    let id = $(this).attr('id');
+    if(id == 'create_block'){
+        $('#writer').attr('action','process/new-block.php');
+    }else if(id == 'update_block') {
         $('#writer').attr('action','process/update-block.php');
     }
     $('#block-writer form').trigger('submit');
+
 });
 

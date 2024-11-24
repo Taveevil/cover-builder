@@ -38,7 +38,7 @@ aside#blocks .block{
     }
 
     &__controls{
-        @include flex(row,flex-end,center);
+        @include flex(row,flex-end,stretch);
         gap:1em;
         flex:1;
         grid-area:controls;

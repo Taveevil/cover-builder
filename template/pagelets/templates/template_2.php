@@ -1,4 +1,4 @@
-<article class="cl_template" id="template-2">
+<div class="cl_template" id="template-2">
     <header>
         <h1>
             <span>TEMPLATE</span>
@@ -42,4 +42,4 @@
             </div>
         </div>
     </div>
-</article>
+</div>

@@ -24,7 +24,7 @@
             <?php endforeach; endif; ?>
         </ul>
     </div>
-    <div class="block__copy" readonly contenteditable="true">
+    <div class="block__copy" readonly>
         <?php echo $block->copy ?>
     </div>
 </div>

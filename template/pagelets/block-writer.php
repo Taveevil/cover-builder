@@ -3,6 +3,7 @@
         <div class="content">
             <form id="writer"method="post">
                 <header>
+                    <input type="text" id="block_id" name="block_id" hidden readonly>
                     <input name="block_name" id="block_name" type="text" placeholder="Untitled">
                     <button class="btn writer_toggle"><i class="ph ph-x"></i></button>
                 </header>

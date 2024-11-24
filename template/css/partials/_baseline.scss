@@ -35,7 +35,7 @@ pre, table, fieldset, hr {
 p,label,li{
     font-family: $main-font;
     font-weight:400;
-    font-size:$step-0;
+    font-size:$step--1;
     line-height: 150%;
 }
 
@@ -75,8 +75,4 @@ h4{
 
 h5{
     font-size:$step-1;
-}
-
-body{
-    background-color: var(--bg);
 }

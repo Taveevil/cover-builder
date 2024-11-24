@@ -17,10 +17,10 @@
     <?php include 'template/pagelets/menu-variables.php' ?>
 
     <main class="cover_letter_container">
-        <form method="POST" id="cover_letter">
+        <article id="cover_letter">
             <?php include 'template/pagelets/templates/template_1.php' ?>
-        </form>
-</main>
+        </article>
+    </main>
 
     <?php include 'template/pagelets/menu-blocks.php' ?>
 
