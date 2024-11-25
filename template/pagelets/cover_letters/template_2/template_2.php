@@ -1,8 +1,14 @@
-<div class="cl_template" id="template-1">
+<?php 
+    $doc_name = 'template_2';
+
+?>
+
+<link rel="stylesheet" href="<?php echo $site['url_cover_letters'].$doc_name?>/css/style.css">
+<div class="cl_template" id="<?php echo $doc_name; ?>">
     <header>
         <h1>
-            <span>Tavee</span>
-            <span>Villamar</span>
+            <span>TEMPLATE</span>
+            <span>2</span>
         </h1>
         <h2>Certified Coding guy</h2>
     </header>

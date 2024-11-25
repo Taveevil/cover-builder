@@ -40,6 +40,7 @@ $site['url_search'] = $site['url'].'/search.php?s=';
 $site['url_template'] = $site['url'].'/template';
 $site['url_content'] = $site['url'].'/content';
 $site['url_process'] = $site['url'].'/process';
+$site['url_cover_letters'] = $site['url_template'].'/pagelets/cover_letters/';
 
 $site['general_email'] = 'hello@tavee.ca';
 

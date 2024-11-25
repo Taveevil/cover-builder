@@ -13,7 +13,6 @@ $('#download.btn').on('click',function(){
     }
 });
 
-
 function makePDF(){
 
     var element = document.querySelector('#cover_letter');

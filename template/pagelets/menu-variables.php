@@ -1,5 +1,5 @@
 <?php 
-    $path = 'template/pagelets/templates';
+    $path = 'template/pagelets/cover_letters';
     $templates =array_slice(scandir($path),2);
 ?>
 

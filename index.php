@@ -23,7 +23,7 @@
 
     <main class="cover_letter_container">
         <article id="cover_letter">
-            <?php include 'template/pagelets/templates/template_1.php' ?>
+            <?php include 'template/pagelets/cover_letters/template_1/template_1.php' ?>
         </article>
     </main>
 

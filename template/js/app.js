@@ -221,9 +221,14 @@ $('form#cl_var').on('input',function(e){
 $('select#template').on('change',function(){
     let path = $(this).val();
 
+    path = path.replace(/ /g,"_");
+
     let rqst = $.ajax({
-        method:"GET",
-        url:"template/pagelets/templates/"+path,
+        method:"POST",
+        url:"process/get-cover_letter.php",
+        data:{
+            name: path,
+        },
         dataType:"html"
     });
 
