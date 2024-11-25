@@ -66,4 +66,25 @@ function mysql_delete_block($block_id = 0){
 
 }
 
+function mysql_write_new_tag($name = '') {
+	global $pdo;
+	
+	mysql_cxn();
+	
+	try {
+		$sql = "INSERT INTO tag (name) VALUES (:name)";
+
+		$pdo->prepare($sql)->execute([
+			'name' => $name,
+		]);
+
+		$id = $pdo->lastInsertId();
+	}
+	catch(PDOException $exception){ 
+		echo $exception->getMessage(); 
+	}	
+	
+	return $id;
+}
+
 ?>

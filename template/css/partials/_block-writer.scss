@@ -11,7 +11,6 @@
 
     .content{
         position:relative;
-        height:50vh;
         width:50vw;
         max-width:50vw;
     }
@@ -108,7 +107,6 @@
                 
                     li{
                         @include flex(row,center,center);
-                        text-transform: capitalize;
                         border-radius:.5em;
                         height:100%;
                         width:auto;
@@ -133,6 +131,7 @@
                         border:unset;
                         border-radius: unset;
                         border-right:1px solid $black;
+                        width:100%;
                     }
 
                     button{
@@ -150,20 +149,17 @@
             position:relative;
             @include flex(row,flex-start,center);
             width:100%;
-            height:auto;
+            flex-wrap:wrap;
             gap:1em;
 
             .tag_content{
                 @include flex(row,flex-start,center);
+                flex-wrap:wrap;
                 gap:1em;
                 font-family: $main-font;
                 padding:.5em;
                 background-color: $accent;
                 border-radius: .5em;
-            }
-
-            .tag{
-                text-transform: capitalize;
             }
         }
 

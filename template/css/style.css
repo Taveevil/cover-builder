@@ -130,6 +130,25 @@ input[type=tel] {
   transition: all 0.2s ease-in-out;
 }
 
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(201, 201, 201, 0.2509803922);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2C302E;
+}
+
 aside#blocks .block {
   width: 100%;
   display: flex;
@@ -183,6 +202,7 @@ aside#blocks .block__tags {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5em;
 }
 aside#blocks .block__tags li {
@@ -216,7 +236,6 @@ aside#blocks .block__tags li {
 }
 #block-writer .content {
   position: relative;
-  height: 50vh;
   width: 50vw;
   max-width: 50vw;
 }
@@ -329,7 +348,6 @@ aside#blocks .block__tags li {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  text-transform: capitalize;
   border-radius: 0.5em;
   height: 100%;
   width: auto;
@@ -355,6 +373,7 @@ aside#blocks .block__tags li {
   border: unset;
   border-radius: unset;
   border-right: 1px solid #2C302E;
+  width: 100%;
 }
 #block-writer form .tags .tag_input-container .input_container button {
   border: unset;
@@ -367,7 +386,7 @@ aside#blocks .block__tags li {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: auto;
+  flex-wrap: wrap;
   gap: 1em;
 }
 #block-writer form .tag_container .tag_content {
@@ -375,14 +394,12 @@ aside#blocks .block__tags li {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: wrap;
   gap: 1em;
   font-family: "Roboto", sans-serif;
   padding: 0.5em;
   background-color: rgba(201, 201, 201, 0.2509803922);
   border-radius: 0.5em;
-}
-#block-writer form .tag_container .tag {
-  text-transform: capitalize;
 }
 #block-writer form .submit_container {
   display: flex;

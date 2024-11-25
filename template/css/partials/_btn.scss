@@ -28,3 +28,22 @@ input[type=tel]{
     padding: .5em 1em;
     transition:all .2s ease-in-out; 
 }
+
+::-webkit-scrollbar {
+    width: .5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: $accent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: $black;
+} 

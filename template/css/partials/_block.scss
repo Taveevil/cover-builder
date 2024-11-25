@@ -48,6 +48,7 @@ aside#blocks .block{
         grid-area:tags;
         list-style-type: none;
         @include flex(row,flex-start,center);
+        flex-wrap:wrap;
         gap:.5em;
 
 
