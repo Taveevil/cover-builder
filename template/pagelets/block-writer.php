@@ -19,7 +19,10 @@
                         <div class="tag_container"></div>
                         <div class="tag_input-container">
                             <label for="tag_input">Tags: </label>
-                            <input id="tag_input" name="tag_input" type="text">
+                            <div class="input_container">
+                                <input id="tag_input" name="tag_input" type="text">
+                                <button class="btn" id="create_tag"><i class="ph ph-plus-circle"></i></button>
+                            </div>
                             <div class="tag_auto"></div>
                         </div>
                     </div>

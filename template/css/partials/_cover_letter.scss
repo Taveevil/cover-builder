@@ -1,12 +1,12 @@
 .cover_letter_container{
     padding:1em;
     @include flex(column,center,center);
+    max-height:100vh;
 }
 
 #cover_letter{
-    height:auto;
-    width:100%;
-    margin:auto auto;
+    height:100%;
+    width:auto;
     max-height:1056px;
     max-width:816px;
     background-color: white;

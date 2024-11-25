@@ -49,9 +49,9 @@
     </form>
 
     <div class="controls">
-        <button class="btn writer_toggle"><i class="ph ph-pencil"></i></button>
-        <button id="clear" class="btn"><i class="ph ph-backspace"></i></button>
-        <button id="download" class="btn"><i class="ph ph-download"></i></button>
+        <button class="btn writer_toggle">Write a new block<i class="ph ph-plus-circle"></i></button>
+        <button id="clear" class="btn">Reset Cover Letter<i class="ph ph-backspace"></i></button>
+        <button id="download" class="btn">Download PDF<i class="ph ph-download"></i></button>
                         
     </div>
 

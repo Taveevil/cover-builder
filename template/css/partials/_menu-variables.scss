@@ -1,5 +1,6 @@
 aside#variables{
     @include flex(column,flex-start,flex-start);
+    max-height:100vh;
     background-color: $white;
     box-shadow: 2px 0 4px rgba(0, 0, 0, 0.151);
     gap:1em;
@@ -17,7 +18,7 @@ aside#variables{
 
         input{
             width:100%;
-            padding:.25em;
+            padding:.5em 1em;
         }
 
         label{
@@ -29,6 +30,17 @@ aside#variables{
         .tags{
             @include flex(column,flex-start,flex-start);
             gap:1em;
+        }
+    }
+
+    .controls{
+        margin-top:auto;
+        @include flex(column,flex-start,flex-start);
+        width:100%;
+        gap:1em;
+
+        .btn{
+            width:100%;
         }
     }
 }

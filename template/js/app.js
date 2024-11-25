@@ -1,5 +1,6 @@
 
 $(document).on('DOMContentLoaded',function(){
+    resizeCover();
     $('.cl_content').sortable(cl_col_init);
 
     let block_col = $('#blocks').sortable({
@@ -24,19 +25,25 @@ $(document).on('DOMContentLoaded',function(){
     let tag_auto = $('#tag_input').autocomplete({
         source: tag_list,
         appendTo: '.tag_auto',
+        autoFocus: true,
+        position: { my : "left top", at: "right top" },
         select:function(event, ui){
-            let tags_arr = Array.from($('.tag_container .tag'));
-            let contains_tag = (tags_arr.indexOf(ui.item.value) > -1);
-
-            if(!contains_tag){
-                create_tag(ui.item.value)
-            }
+            validateTags(ui.item.value);
         },
     });
 
     initEditButton();
     
 });
+
+function validateTags(tag){
+    let tags_arr = $('.tag_container .tag').toArray().map(tag => tag.innerHTML);
+    let contains_tag = (tags_arr.indexOf(tag) > -1);
+
+    if(!contains_tag){
+        create_tag(tag);
+    }
+}
 
 
 function create_tag(tag){
@@ -60,6 +67,10 @@ function create_tag(tag){
 
 
 $(window).on('resize',function(){
+    resizeCover();
+});
+
+function resizeCover(){
     let cl = $('#cover_letter');
     let container = $('.cover_letter_container');
 
@@ -68,7 +79,7 @@ $(window).on('resize',function(){
     let mult = width < max_width ? (width/max_width) * 100 : 100;
 
     $(cl).css('transform','scale('+mult+'%)');
-});
+}
 
 $(document).on('keyup', function(event) {
     
@@ -79,7 +90,7 @@ $(document).on('keyup', function(event) {
 
 function toggleWriter(bool){
 
-      sessionStorage.clear();
+    sessionStorage.clear();
 
 
         if($('#block-writer').hasClass('active') || bool == false){
@@ -296,6 +307,12 @@ $('#block-writer .submit_container .btn').on('click',function(e){
         $('#writer').attr('action','process/update-block.php');
     }
     $('#block-writer form').trigger('submit');
+
+});
+
+$('#create_tag').on('click',function(){
+
+
 
 });
 
