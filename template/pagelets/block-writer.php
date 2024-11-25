@@ -1,5 +1,5 @@
 
-    <div id="block-writer">
+    <div class="modal" id="block-writer">
         <div class="content">
             <form id="writer"method="post">
                 <header>

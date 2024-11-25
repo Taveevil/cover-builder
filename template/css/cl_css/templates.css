@@ -89,17 +89,6 @@ h5 {
   grid-template-rows: min-content minmax(auto, 100%);
   grid-template-columns: 30% minmax(auto, 100%);
   grid-gap: 1em;
-}
-#template-1 h1,
-#template-1 h2,
-#template-1 h3,
-#template-1 h4,
-#template-1 h5,
-#template-1 h6,
-#template-1 p,
-#template-1 label,
-#template-1 a,
-#template-1 li {
   font-family: "Work Sans", sans-serif !important;
 }
 #template-1 p,

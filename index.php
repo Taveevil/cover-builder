@@ -13,8 +13,13 @@
 ?>
 <body>
     
-    <?php include 'template/pagelets/block-writer.php' ?>
-    <?php include 'template/pagelets/menu-variables.php' ?>
+    <?php
+    include 'template/pagelets/menu-tags.php'; 
+    include 'template/pagelets/block-writer.php';
+    include 'template/pagelets/menu-variables.php'; 
+    ?>
+    
+    <?php  ?>
 
     <main class="cover_letter_container">
         <article id="cover_letter">

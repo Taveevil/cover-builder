@@ -12,22 +12,12 @@
     grid-template-rows: min-content minmax(auto,100%);
     grid-template-columns: 30% minmax(auto,100%);
     grid-gap:1em;
+    font-family: "Work Sans", sans-serif !important;
+
 
     $primary: #3670B7;
     $secondary: #E74425;
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    label,
-    a,
-    li{
-        font-family: "Work Sans", sans-serif !important;
-    }
 
     p,
     li{

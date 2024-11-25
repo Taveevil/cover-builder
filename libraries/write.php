@@ -66,6 +66,27 @@ function mysql_delete_block($block_id = 0){
 
 }
 
+// This function deletes the block from the database
+function mysql_delete_tag($tag_id = 0){
+	global $pdo;
+
+	mysql_cxn();
+
+	try{
+		$sql = "UPDATE tag SET trashed='y' WHERE tag_id=:tag_id";
+		
+		$pdo->prepare($sql)->execute([
+			'tag_id' => intval($tag_id)
+		]);
+
+	}catch(PDOException $exception){
+		echo $exception->getMessage(); 
+	}
+
+	return true;
+
+}
+
 function mysql_write_new_tag($name = '') {
 	global $pdo;
 	
@@ -85,6 +106,26 @@ function mysql_write_new_tag($name = '') {
 	}	
 	
 	return $id;
+}
+
+function mysql_update_tag($tag_id = 0,$name = '') {
+	global $pdo;
+	
+	mysql_cxn();
+	
+	try {
+		$sql = "UPDATE tag SET name=:name WHERE tag_id=:tag_id && trashed='n'";
+
+		$pdo->prepare($sql)->execute([
+			'tag_id' => intval($tag_id),
+			'name' => $name,
+		]);
+
+	}
+	catch(PDOException $exception){ 
+		echo $exception->getMessage(); 
+	}	
+	return true;
 }
 
 ?>

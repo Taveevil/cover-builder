@@ -14,6 +14,12 @@
         background-color: $accent;
         transform: translateY(-2px);
     }
+
+    &:disabled{
+        color:rgba($black,.4);
+        border-color:rgba($black,.4);
+        cursor:not-allowed;
+    }
 }
 
 

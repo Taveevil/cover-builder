@@ -4,7 +4,7 @@
             <span>TEMPLATE</span>
             <span>2</span>
         </h1>
-        <h2>Web Developer & Motion Graphics artist</h2>
+        <h2>Certified Coding guy</h2>
     </header>
     <div class="column" id="column-1">
         <div class="seperator">
@@ -15,11 +15,11 @@
         <div class="contact contact__to">
             <h5>To</h5>
             <ul>
-                <li class="manager_name"></li>
-                <li class="company_name"></li>
-                <li class="phone"></li>
-                <li class="email"></li>
-                <li class="company_address"></li>
+                <li class="manager_name">Manager Name</li>
+                <li class="company_name">Company Name</li>
+                <li class="phone">(123)123-1234</li>
+                <li class="email">email@fakeemail.ca</li>
+                <li class="company_address">123 fake st. A1B 2C4</li>
             </ul>
         </div>
         <div class="contact contact__from">

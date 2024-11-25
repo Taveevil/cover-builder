@@ -11,6 +11,7 @@
     max-width:816px;
     background-color: white;
     aspect-ratio: 17/22;
+    color:black;
     
 }
 
@@ -63,9 +64,13 @@
 
         &__content{
             max-width:100%;
+            
         }
 
         &__copy{
+            font-size:$step--1;
+            font-weight:400;
+            line-height: 150%;
 
             > *{
                 width:100%;
@@ -82,5 +87,8 @@
         width:100%;
         height:auto;
         padding:1em;
+        font-size:$step--1;
+        font-weight:400;
+        line-height: 150%;
     }
 }

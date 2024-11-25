@@ -117,6 +117,11 @@ body .cover_letter_container {
   background-color: rgba(201, 201, 201, 0.2509803922);
   transform: translateY(-2px);
 }
+.btn:disabled {
+  color: rgba(44, 48, 46, 0.4);
+  border-color: rgba(44, 48, 46, 0.4);
+  cursor: not-allowed;
+}
 
 select,
 input[type=text],
@@ -149,6 +154,32 @@ input[type=tel] {
   background-color: #2C302E;
 }
 
+.modal {
+  position: absolute;
+  z-index: 99999;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(201, 201, 201, 0.2509803922);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: all 0.2s ease-in-out;
+}
+.modal .content {
+  position: relative;
+  width: 50vw;
+  max-width: 50vw;
+}
+.modal.active {
+  pointer-events: all;
+  opacity: 1;
+  transform: translateY(0);
+  transition: 0.2s cubic-bezier(0.42, 0, 0.25, 1.89);
+}
+
 aside#blocks .block {
   width: 100%;
   display: flex;
@@ -161,6 +192,7 @@ aside#blocks .block {
   padding: 1em;
   border: 1px solid rgba(201, 201, 201, 0.2509803922);
   box-shadow: 0 2px 4px rgba(201, 201, 201, 0.2509803922);
+  font-family: "Roboto", sans-serif;
 }
 aside#blocks .block.drag {
   position: absolute;
@@ -182,6 +214,9 @@ aside#blocks .block__copy {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  font-size: clamp(0.625rem, 0.5641rem + 0.3043vw, 0.8rem);
+  font-weight: 400;
+  line-height: 150%;
 }
 aside#blocks .block__copy span {
   background-color: unset;
@@ -221,23 +256,10 @@ aside#blocks .block__tags li {
 }
 
 #block-writer {
-  position: absolute;
-  z-index: 99999;
-  inset: 0;
-  background-color: rgba(201, 201, 201, 0.2509803922);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-5px);
-  transition: all 0.2s ease-in-out;
-}
-#block-writer .content {
-  position: relative;
-  width: 50vw;
-  max-width: 50vw;
 }
 #block-writer form {
   width: 100%;
@@ -414,12 +436,6 @@ aside#blocks .block__tags li {
 #block-writer form .submit_container input[type=submit].btn.active {
   display: block;
 }
-#block-writer.active {
-  pointer-events: all;
-  opacity: 1;
-  transform: translateY(0);
-  transition: 0.2s cubic-bezier(0.42, 0, 0.25, 1.89);
-}
 
 .ui-helper-hidden-accessible {
   display: none;
@@ -490,6 +506,104 @@ aside#variables .controls .btn {
   width: 100%;
 }
 
+#tag_table {
+  font-family: "Roboto", sans-serif;
+}
+#tag_table .content {
+  max-height: 50vh;
+  height: 50vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1em;
+  background-color: #FFFFFF;
+  padding: 2em;
+}
+#tag_table .content header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#tag_table .tag_maker {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0.5em;
+}
+#tag_table table {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+}
+#tag_table table thead {
+  width: 100%;
+  background-color: rgba(201, 201, 201, 0.2509803922);
+  border-radius: 0.5em;
+}
+#tag_table table tr {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  row-gap: 1em;
+  border-radius: 0.5em;
+}
+#tag_table table tr:nth-child(even) {
+  background-color: rgba(201, 201, 201, 0.2509803922);
+}
+#tag_table table td,
+#tag_table table th {
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+}
+#tag_table table td.actions,
+#tag_table table th.actions {
+  align-items: stretch;
+}
+#tag_table table td.tag_name,
+#tag_table table th.tag_name {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+#tag_table table td.tag_name .tag_name_input,
+#tag_table table th.tag_name .tag_name_input {
+  border: none;
+  background-color: transparent;
+}
+#tag_table table td.tag_name .controls,
+#tag_table table th.tag_name .controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(2px);
+  transition: all 0.2s ease-in-out;
+}
+#tag_table table td.tag_name .controls.active,
+#tag_table table th.tag_name .controls.active {
+  pointer-events: unset;
+  opacity: 1;
+  transform: translateX(0);
+}
+#tag_table table tbody {
+  border-radius: 0.5em;
+}
+
 .cover_letter_container {
   padding: 1em;
   display: flex;
@@ -506,6 +620,7 @@ aside#variables .controls .btn {
   max-width: 816px;
   background-color: white;
   aspect-ratio: 17/22;
+  color: black;
 }
 
 .cl_template {
@@ -552,6 +667,11 @@ aside#variables .controls .btn {
 .cl_content .block__content {
   max-width: 100%;
 }
+.cl_content .block__copy {
+  font-size: clamp(0.625rem, 0.5641rem + 0.3043vw, 0.8rem);
+  font-weight: 400;
+  line-height: 150%;
+}
 .cl_content .block__copy > * {
   width: 100%;
 }
@@ -561,4 +681,7 @@ aside#variables .controls .btn {
   width: 100%;
   height: auto;
   padding: 1em;
+  font-size: clamp(0.625rem, 0.5641rem + 0.3043vw, 0.8rem);
+  font-weight: 400;
+  line-height: 150%;
 }/*# sourceMappingURL=style.css.map */

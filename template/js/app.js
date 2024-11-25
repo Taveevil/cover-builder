@@ -40,6 +40,7 @@ $(document).on('DOMContentLoaded',function(){
     });
 
     initEditButton();
+    initEditTagButtons();
     
 });
 
@@ -91,15 +92,17 @@ function resizeCover(){
 $(document).on('keyup', function(event) {
     
     if( event.key === 'Escape'){
-        toggleWriter();
+
+        if($('#block-writer').hasClass('active')){
+            toggleWriter(false);
+        }
+        else if($('#tag_table').hasClass('active')){
+            toggleTagtable(false);
+        }
     }
 });
 
 function toggleWriter(bool){
-
-    sessionStorage.clear();
-
-
         if($('#block-writer').hasClass('active') || bool == false){
             $('#block-writer').removeClass('active');
 
@@ -122,10 +125,6 @@ function toggleWriter(bool){
 
             $('#block-writer').addClass('active');
         }
-
-        
-
-  
 }
 
 
@@ -250,9 +249,9 @@ $('#clear').on('click',function(){
         dataType:'html',
     }).done(function(response){
         $('#blocks').html(response);
+        initEditButton();
     });
     $('.cl_content').html('');
-    initEditButton();
     sessionStorage.clear();
 });
 
@@ -324,3 +323,154 @@ $('#tag_input').on('keyup',function(e){
     }
 });
 
+
+$('.tag_manager_toggle').on('click',function(){
+    toggleTagtable();
+});
+
+$('.manage_tags').on('click',function(){
+    toggleTagtable();
+});
+
+$('.btn__delete_tag').on('click',function(){
+    let tag = $(this).closest('.tag_row');
+    let tag_id = $(tag).find('.tag_id').html();
+
+
+    $.ajax({
+        method: 'POST',
+        url: 'process/delete-tag.php',
+        data: {tag_id:tag_id},
+    })
+    .done(function(response){
+        console.log(response);
+        alert($(tag).find('.tag_name').val() + ' has been deleted');
+        $(tag).remove();
+    });
+});
+
+function initEditTagButtons(){
+    $('.btn__edit_tag').on('click',function(){
+        let tag_row = $(this).closest('.tag_row');
+        let name_cache = $('td.tag_name input').val();
+        $(this).prop('disabled',true);
+        $('td.tag_name input',tag_row).trigger('focus');
+        $('td.tag_name input',tag_row).prop('readonly',false);
+        $('.controls',tag_row).addClass('active');
+
+        $('.tag_name_input',tag_row).on('keyup',function(e){
+            if(e.which === 13){
+                e.preventDefault();
+
+                if(updateTag(tag_row)){
+                    $(this).prop('disabled',false);
+                    $('td.tag_name input',tag_row).prop('readonly',true);
+                }
+
+                $('td.tag_name input',tag_row).blur();
+                $('.controls',tag_row).removeClass('active');
+                $('.btn__edit_tag',tag_row).prop('disabled',false);
+                $('td.tag_name input',tag_row).prop('readonly',true);
+            }
+        });
+
+        $('.save_tag',tag_row).on('click',function(){
+            if(updateTag(tag_row)){
+                $(this).prop('disabled',false);
+                $('td.tag_name input',tag_row).prop('readonly',true);
+            }
+            $('td.tag_name input',tag_row).blur();
+            $('.controls',tag_row).removeClass('active');
+            $('.btn__edit_tag',tag_row).prop('disabled',false);
+            $('td.tag_name input',tag_row).prop('readonly',true);
+        });
+
+        $('.reset_tag',tag_row).on('click',function(){
+            $('td.tag_name input',tag_row).blur();
+            $('.controls',tag_row).removeClass('active');
+            $('.btn__edit_tag',tag_row).prop('disabled',false);
+            $('td.tag_name input',tag_row).val(name_cache);
+            $('td.tag_name input',tag_row).prop('readonly',true);
+        });
+
+    });
+}
+
+function updateTag(tag){
+    let tag_id = $('.tag_id',tag).html();
+    let tag_name = $('.tag_name_input',tag).val();
+
+    $.ajax({
+        method: 'POST',
+        url: 'process/update-tag.php',
+        data: {
+            tag_id: tag_id,
+            name : tag_name
+        },
+    })
+    .done(function(response){
+        alert($('.tag_name',tag).val() + ' has been updated');
+        return true;
+    });
+}
+
+function toggleTagtable(bool){
+    if($('#tag_table').hasClass('active') || bool == false){
+        $('#tag_table').removeClass('active');
+    }else{
+        $('#tag_table').addClass('active');
+    }
+}
+
+$('#tag_maker').on('keyup',function(e){
+    if(e.which === 13){
+        let name = $('#tag_maker').val();
+        AJAXCreateTag(name);
+    }
+});
+
+$('.make_tag').on('click',function(){
+    let name = $('#tag_maker').val();
+    AJAXCreateTag(name);
+});
+
+function AJAXCreateTag(tag){
+
+    $.ajax({
+        method: 'POST',
+        url: 'process/new-tag.php',
+        data: {
+            name : tag
+        },
+    })
+    .done(function(response){
+        alert(tag + ' has been created');
+
+        let tag_row = 
+        `
+        <tr class="tag_row">
+            <td class="tag_id">`+response+`</td>
+            <td class="tag_name">
+                <input readonly="" class="tag_name_input" type="text" value="`+tag+`">
+                <div class="controls">
+                    <button class="btn save_tag"><i class="ph ph-check-fat"></i></button>
+                    <button class="btn reset_tag"><i class="ph ph-x"></i></button>
+                </div>
+            </td>
+            <td class="actions">
+                <button class="btn btn__edit_tag"><i class="ph ph-pen"></i></button>
+                <butto class="btn btn__delete_tag"><i class="ph ph-trash"></i></button>
+            </td>
+        </tr>
+        `
+
+        $('tbody').append(tag_row);
+        initEditTagButtons();
+    });
+
+
+    
+
+    initEditTagButtons();
+
+}

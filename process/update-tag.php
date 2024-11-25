@@ -1,8 +1,7 @@
-
-<?php 
+<?php
 
 // ##################################################################### //
-// ######################### NEW BLOCK PROCESS ######################### //
+// ######################### UPDATE TAG PROCESS ######################## //
 // ##################################################################### //
 
 include '../libraries/config.php';
@@ -10,17 +9,12 @@ include '../libraries/read.php';
 include '../libraries/write.php'; 
 include '../libraries/functions.php'; 
 
+
 $rqst = rqst($_POST);
 
-mysql_update_block(
-    $rqst['block_id'],
-    $rqst['block_name'],
-    $_POST['block_copy'],
-    $rqst['block_tags']
+echo mysql_update_tag(
+    $rqst['tag_id'],
+    $rqst['name']
 );
-
-
-header('Location: '.$site['url'].'/index.php');
-exit();
 
 ?>

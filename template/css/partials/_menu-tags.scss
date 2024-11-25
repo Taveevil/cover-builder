@@ -1,0 +1,93 @@
+#tag_table{
+    font-family: $main-font;
+    
+
+    .content{
+        max-height:50vh;
+        height:50vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        border-radius: .5em;
+        @include flex(column,flex-start,flex-start);
+        gap:1em;
+        background-color: $white;
+        padding:2em;
+
+
+        header{
+            width:100%;
+            @include flex(row,space-between,center);
+        }
+    }
+
+    .tag_maker{
+        @include flex(row,flex-start,stretch);
+        gap:.5em;
+    }
+
+    table{
+        height:100%;
+        width:100%;
+        border-radius: inherit;
+        
+        thead{
+            width:100%;
+            background-color: $accent;
+            border-radius: .5em;
+        }
+
+        tr{
+            width:100%;
+            display:grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            row-gap: 1em;
+            border-radius: .5em;
+            &:nth-child(even){
+                background-color: $accent;
+            }
+        }
+
+        td,
+        th{
+            padding:1em;
+            @include flex(row,flex-start,center);
+            gap:.5em;
+
+            &.actions{
+                align-items: stretch;
+            }
+
+            &.tag_name{
+                @include flex(row,flex-start,center);
+
+                .tag_name_input{
+                    border:none;
+                    background-color: transparent;
+                }
+                
+                .controls{
+                    @include flex(row,flex-start,center);
+                    gap:.5em;
+                    opacity: 0;
+                    pointer-events: none;
+                    transform: translateX(2px);
+                    transition:all .2s ease-in-out;
+
+                    &.active{
+                        pointer-events: unset;
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+            }
+        }
+
+        tbody{
+            border-radius: .5em;
+        }
+
+        
+    }
+    
+
+}
