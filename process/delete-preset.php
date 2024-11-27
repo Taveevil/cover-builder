@@ -1,7 +1,7 @@
 <?php
 
 // ##################################################################### //
-// ######################### UPDATE TAG PROCESS ######################## //
+// ######################### DELETE TAG PROCESS ######################## //
 // ##################################################################### //
 
 include '../libraries/config.php';
@@ -12,9 +12,6 @@ include '../libraries/functions.php';
 
 $rqst = rqst($_POST);
 
-echo mysql_update_tag(
-    $rqst['id'],
-    $rqst['name']
-);
+echo mysql_delete_preset($rqst['id']);
 
 ?>

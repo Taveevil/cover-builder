@@ -18,43 +18,72 @@ $(document).on('DOMContentLoaded',function(){
         helper:'clone',
         handle: '.handle',
     });
-    
-    
 
-    let cl_col_init = {
-        connectWith: "#blocks",
-        revert:"true",
-        over:function(event,ui){
-            let content = $(ui.item).find('.block__copy').get(0);
-            $('.cl_content .ui-sortable-placeholder').html($(content).html());
-
-        },
-        out:function(event,ui){
-            
-        },
-        receive: function(event,ui){
-            let cl_content = $('.cl_content').get(0);
-
-            $('.cl_content .block').each(function(){
-                let copy = $(this).find('.block__copy').get(0);
-                $(copy).html(decodeHtml($(copy).html()));
-            });
-
-
-            if (isOverflown(cl_content)) {
-                    $(ui.sender).sortable('cancel');
-                    alert('Not enough space on the page!')
-            } else {
-                // your element doesn't have overflow
-            }
-            
-            sessionStorage.setItem('cl_content',$('.cl_content').html());
-        },
-    };
-
+    // we initialize our sortable column
     $('.cl_content').sortable(cl_col_init);
 
 });
+
+let cl_col_init = {
+    connectWith: "#blocks",
+    revert:"true",
+    over:function(event,ui){
+        let content = $(ui.item).find('.block__copy').get(0);
+        $('.cl_content .ui-sortable-placeholder').html($(content).html());
+
+    },
+    out:function(event,ui){
+        
+    },
+    receive: function(event,ui){
+        let cl_content = $('.cl_content').get(0);
+
+        $('.cl_content .block').each(function(){
+            let copy = $(this).find('.block__copy').get(0);
+            $(copy).html(decodeHtml($(copy).html()));
+        });
+
+        // For our preset function we need to assign a string of our tags seperated by commas
+
+        // Check if the existing content in the cl_content box
+        // WITH the placeholder is overflowing
+        // if it is then we cancel the request to move the block over
+        if (isOverflown(cl_content)) {
+                $(ui.sender).sortable('cancel');
+                alert('Not enough space on the page!')
+        } else {
+            // your element doesn't have overflow
+        }
+
+        // console.log(getCoverLetterTags());
+        
+        sessionStorage.setItem('cl_content',$('.cl_content').html());
+    },
+};
+
+function getCoverLetterTags(){
+    // To do that we make an array of the tags attached to the blocks
+    let tags = $('#cover_letter .block__tags li',this).map(function(i,tag) {
+        return $(tag).html();
+    }).get();
+    
+    // and we get the current value of the cover letter tags (if it exists)
+    // and make each item seperated by a comma into a key
+    let cl_tags = $('#cl_tags').val().split(',');
+
+    // once we have those we concatenate them into one array
+    const concatArr = cl_tags.concat(tags)
+    // and then we filter the concatenated array
+    // .filter() spits our a new array based on our callback functino
+    // our callback function goes through each item
+    // and runs it through another function called IndexOf()
+    // which searches the array for the first occurence of our value and returns the key
+    // if they idx is the same as the key returned from indexOf() it's included in our resulting array
+    const result = concatArr.filter((item, idx) => concatArr.indexOf(item || true) === idx);
+    $('#cl_tags').val(result.toString());
+
+    return result;
+}
 
 // This function scales our cover letter down or up whenever we resize the window
 // this way we keep our aspect ratio
@@ -84,12 +113,15 @@ function resizeCover(){
 $(document).on('keyup', function(event) {
     
     if( event.key === 'Escape'){
+        let modal = $('.modal');
 
-        if($('#block_writer').hasClass('active')){
-            toggleWriter(false);
-        }
-        else if($('#tag_table').hasClass('active')){
-            toggleTagtable(false);
+        if($(modal).hasClass('active')){
+            // remove the active class
+            $(modal).removeClass('active');
+            // and after the animation is done remove the modal from the document
+            $(modal).on('transitionend webkitTransitionEnd oTransitionEnd',function(){
+                $(modal).remove();
+            });
         }
     }
 });
@@ -334,6 +366,7 @@ $('select#template').on('change',function(){
         }
 
         $('.cl_content').sortable(cl_col_init);
+        $('#cl_tags').val('');
     });
 });
 
@@ -377,9 +410,6 @@ $('body').on('click','#block_writer .submit_container .btn',function(e){
 // ====================================================== //
 // ==================== TAG FUNCTIONS =================== //
 // ====================================================== //
-
-
-
 // TAG TABLE HEADER
 // On click or on enter send the value of the input 
 // to our AJAX and create an element on th tag table
@@ -397,114 +427,33 @@ $('.tag_input').on('keyup',function(e){
     }
 });
 
-
-
-
-// Whenever the delete button on a row is clicked
-$('body').on('click','#tag_table .tag_row__delete',function(){
-    // We get the parent row
-    let tag_row = $(this).closest('.tag_row');
-
-    // and the id
-    let tag_id = $('.tag_row__id',tag_row).html();
-    let tag_name = $('.tag_row__name-input',tag_row).val();
-
-    // if the user confirms that they want to delete
-    if(window.confirm('Are you sure you want to delete '+tag_name+'?')){
-        // we send that id to our delete-tag.php process
-        $.ajax({
-            method: 'POST',
-            url: 'process/delete-tag.php',
-            data: {tag_id:tag_id},
-        })
-        .fail(function(response){
-            alert('Oops! something went wrong')
-            console.log(response);
-        })
-        .done(function(response){
-            // if successful alert us that the tag has been deleted
-            alert(tag_name + ' has been deleted');
-            // and remove it from the table
-            $(tag_row).remove();
-        });
-    }
-});
-
-$('body').on('click','#tag_table .tag_row__edit',function(){
-    // After pressing the tag button we grab the parent container
-    let tag_row = $(this).closest('.tag_row');
-    // We save the current name in a cache just in case we change our mind
-    let name_cache = $('td.tag_name input').val();
-
-    // We disable the edit button since we're actively editing our element
-    $(this).prop('disabled',true);
-
-    // and we shift the focus to our input for our tag's name
-    $('.tag_row__name-input',tag_row).trigger('focus');
-    $('.tag_row__name-input',tag_row).prop('readonly',false);
-
-    // and reveal the controls that decide whether or not we want to save or revert our changes
-    $('.controls',tag_row).addClass('active');
-
-    // This nested function will do the following once called:
-    function done(bool){
-        // Remove the focus from the input element
-        $('.tag_row__name input',tag_row).blur();
-        // Hide our controls
-        $('.controls',tag_row).removeClass('active');
-        // re-enable our edit button for this row
-        $('.tag_row__edit',tag_row).prop('disabled',false);
-        // and make the input that holds our tag name readonly so we don't change it by mistake
-        $('.tag_row__name-input',tag_row).prop('readonly',true);
-
-        // if we pass false into the function
-        if(!bool){
-            // then revert the name of the tag bag to it's old one
-            $('td.tag_row__name-input',tag_row).val(name_cache);
-        }
-
-    };
-
-
-    //If enter or the save tag button are pressed, Then we call out ajaxUpdateTag functino
-    // to save our tag in our database
-    // and once that's done we call our nested 'done()' function to clear classes
-    $('.tag_row__name-input',tag_row).on('keyup',function(e){
-        if(e.which === 13){
-            e.preventDefault();
-
-            if(ajaxUpdateTag(tag_row)){
-                done();
-            }
-        }
-    });
-
-    $('.tag_row__save',tag_row).on('click',function(){
-        if(ajaxUpdateTag(tag_row)){
-            done();
-        }
-    });
-
-    // Otherwise we just reset our tagrow back to normal
-    $('.tag_row__reset',tag_row).on('click',function(){
-        done(false);
-    });
-
-});
-
 // This function uses ajax to update a tag if changed
-function ajaxUpdateTag(tag){
+function ajaxUpdateRow(row){
+
+    let url;
+    let bool;
+
+    switch ($(row).closest('.modal').attr('id')) {
+        case 'presets':
+            url = 'update-preset_name.php'
+        break;
+        case 'tag_table':
+            url = 'update-tag.php'
+        break;
+    }
+
     // first we find our tag's id and name
-    let tag_id = $('.tag_id',tag).html();
-    let tag_name = $('.tag_name_input',tag).val();
+    let row_id = $('.row__id',row).html();
+    let row_name = $('.row__name-input',row).val();
+
 
     // Then we send a POST request to our update-tag.php process
     $.ajax({
         method: 'POST',
-        url: 'process/update-tag.php',
+        url: 'process/'+url,
         data: {
-            tag_id: tag_id,
-            name : tag_name
+            id: row_id,
+            name : row_name
         },
     }).fail(function(response){
         alert('Oops! something went wrong')
@@ -513,17 +462,11 @@ function ajaxUpdateTag(tag){
     .done(function(response){
         // if successful then we alert the user that the task has been completed
         // and return true so that we can move on to the next step
-        alert($('.tag_name',tag).val() + ' has been updated');
-        return true;
+        alert($('.row__name-input',row).val() + ' has been updated');
+        bool = true;
     });
-}
 
-function toggleTagtable(bool){
-    if($('#tag_table').hasClass('active') || bool == false){
-        $('#tag_table').removeClass('active');
-    }else{
-        $('#tag_table').addClass('active');
-    }
+    return bool;
 }
 
 $('.tag_maker__input').on('keyup',function(e){
@@ -579,6 +522,149 @@ function AJAXCreateTag(tag){
     });
 }
 
+// ====================================================== //
+// ================== PRESET FUNCTIONS ================== //
+// ====================================================== //
+
+
+// Whenever the delete button on a row is clicked
+$('body').on('click','.row__delete',function(){
+    // We get the parent row
+    let row = $(this).closest('.row');
+    let id = $('.row__id',row).html();
+    let name = $('.row__name-input',row).val();
+    let url;
+    
+    switch ($(row).closest('.modal').attr('id')) {
+        case 'presets':
+            url = 'delete-preset.php'
+        break;
+        case 'tag_table':
+            url = 'delete-tag.php'
+        break;
+    }
+
+
+    // if the user confirms that they want to delete
+    if(window.confirm('Are you sure you want to delete '+name+'?')){
+        // we send that id to our delete-tag.php process
+        $.ajax({
+            method: 'POST',
+            url: 'process/'+url,
+            data: {id:id},
+        })
+        .fail(function(response){
+            alert('Oops! something went wrong')
+            console.log(response);
+        })
+        .done(function(response){
+            // remove it from the table
+            $(row).remove();
+            // if successful alert us that the tag has been deleted
+            alert(name + ' has been deleted');
+        });
+    }
+
+});
+
+$('body').on('click','.row__edit',function(){
+    // After pressing the tag button we grab the parent container
+    let row = $(this).closest('.row');
+    // We save the current name in a cache just in case we change our mind
+    let name_cache = $('.row__name-input',row).val();
+
+    // We disable the edit button since we're actively editing our element
+    $(this).prop('disabled',true);
+
+    // and we shift the focus to our input for our tag's name
+    $('.row__name-input',row).trigger('focus');
+    $('.row__name-input',row).prop('readonly',false);
+
+    // and reveal the controls that decide whether or not we want to save or revert our changes
+    $('.input_container',row).addClass('active');
+
+    // This nested function will do the following once called:
+    function done(bool){
+        // Remove the focus from the input element
+        $('.row__name-input',row).blur();
+        // Hide our controls
+        $('.input_container',row).removeClass('active');
+        // re-enable our edit button for this row
+        $('.row__edit',row).prop('disabled',false);
+        // and make the input that holds our tag name readonly so we don't change it by mistake
+        $('.row__name-input',row).prop('readonly',true);
+
+        // if we pass false into the function
+        if(!bool){
+            // then revert the name of the tag bag to it's old one
+            $('.row__name-input',row).val(name_cache);
+        }
+
+    };
+
+
+    //If enter or the save tag button are pressed, Then we call out ajaxUpdateRow functino
+    // to save our tag in our database
+    // and once that's done we call our nested 'done()' function to clear classes
+    $('.row__name-input',row).on('keyup',function(e){
+        if(e.which === 13){
+            e.preventDefault();
+            done(true);
+            
+        }
+    });
+
+    $('.row__save',row).on('click',function(){
+        done(true);
+    
+    });
+
+    // Otherwise we just reset our tagrow back to normal
+    $('.row__reset',row).on('click',function(){
+        done(false);
+    });
+
+});
+
+$('body').on('click','.btn__preset_save',function(){
+    let name = $('#preset_name-input').val();
+    let template_id = $('.cl_template').attr('id');
+    let blocks = $('#cover_letter .cl_content .block').map(function(i,block) {
+        return $(block).attr('data-block');
+    }).get();
+    let tags = getCoverLetterTags();
+
+
+    $.ajax({
+        method:'POST',
+        url:'process/new-preset.php',
+        data:{
+            name: name,
+            template_id: template_id,
+            blocks: blocks,
+            tags: tags
+        },
+    })
+    .fail(function(response){
+        alert('Uh oh! Something went wrong');
+        console.log(response);
+    })
+    .done(function(response){
+        console.log(response);
+
+        $.ajax({
+            method: 'POST',
+            url:'process/get-preset_row.php',
+            dataType:'html',
+            data:{
+                id: response,
+            }
+        }).done(function(html){
+            $('#presets tbody').append(html);
+        })
+        
+    });
+});
 
 // ====================================================== //
 // =================== MISC FUNCTIONS =================== //

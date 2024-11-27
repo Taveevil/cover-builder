@@ -12,8 +12,10 @@
 
     .content{
         position:relative;
-        width:50vw;
-        max-width:50vw;
+        width:100%;
+        max-width:60vw;
+
+        
     }
 
 
@@ -22,5 +24,75 @@
         opacity: 1;
         transform: translateY(0);
         transition:0.2s cubic-bezier(0.42, 0, 0.25, 1.89);
+    }
+
+    table{
+        height:100%;
+        width:100%;
+        border-radius: inherit;
+        
+        thead{
+            width:100%;
+            background-color: $accent;
+            border-radius: .5em;
+        }
+
+        tr{
+            width:100%;
+            display:grid;
+            row-gap: 1em;
+            border-radius: .5em;
+            
+            &:nth-child(even){
+                background-color: $accent;
+            }
+        }
+
+        td,
+        th{
+            padding:1em;
+            width:100%;
+            @include flex(row,flex-start,center);
+            gap:.5em;
+        }
+
+        tbody{
+            border-radius: .5em;
+        }
+
+
+        .input_container{
+            @include flex(row,flex-start,center);
+            gap:.5em;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(2px);
+            transition:all .2s ease-in-out;
+
+            &.active{
+                pointer-events: unset;
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .row{
+
+            &.actions{
+                align-items: stretch;
+            }
+    
+            &__name{
+                @include flex(row,flex-start,center);
+                
+            }
+    
+            &__name-input{
+                border:none;
+                background-color: transparent;
+            }
+    
+        }  
+
     }
 }

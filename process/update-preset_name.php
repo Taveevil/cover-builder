@@ -12,7 +12,7 @@ include '../libraries/functions.php';
 
 $rqst = rqst($_POST);
 
-echo mysql_update_tag(
+echo mysql_update_preset_name(
     $rqst['id'],
     $rqst['name']
 );

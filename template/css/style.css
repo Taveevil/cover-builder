@@ -399,14 +399,75 @@ aside#blocks {
 }
 .modal .content {
   position: relative;
-  width: 50vw;
-  max-width: 50vw;
+  width: 100%;
+  max-width: 60vw;
 }
 .modal.active {
   pointer-events: all;
   opacity: 1;
   transform: translateY(0);
   transition: 0.2s cubic-bezier(0.42, 0, 0.25, 1.89);
+}
+.modal table {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+}
+.modal table thead {
+  width: 100%;
+  background-color: rgba(201, 201, 201, 0.2509803922);
+  border-radius: 0.5em;
+}
+.modal table tr {
+  width: 100%;
+  display: grid;
+  row-gap: 1em;
+  border-radius: 0.5em;
+}
+.modal table tr:nth-child(even) {
+  background-color: rgba(201, 201, 201, 0.2509803922);
+}
+.modal table td,
+.modal table th {
+  padding: 1em;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+}
+.modal table tbody {
+  border-radius: 0.5em;
+}
+.modal table .input_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(2px);
+  transition: all 0.2s ease-in-out;
+}
+.modal table .input_container.active {
+  pointer-events: unset;
+  opacity: 1;
+  transform: translateX(0);
+}
+.modal table .row.actions {
+  align-items: stretch;
+}
+.modal table .row__name {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.modal table .row__name-input {
+  border: none;
+  background-color: transparent;
 }
 
 #tag_table .content {
@@ -430,6 +491,9 @@ aside#blocks {
   justify-content: space-between;
   align-items: center;
 }
+#tag_table .content table tr {
+  grid-template-columns: 1fr 2fr 1fr;
+}
 #tag_table .tag_maker {
   display: flex;
   flex-direction: row;
@@ -437,66 +501,90 @@ aside#blocks {
   align-items: stretch;
   gap: 0.5em;
 }
-#tag_table table {
+
+#presets {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+#presets .content {
+  max-height: 50vh;
+  height: 50vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1em;
+  background-color: #FFFFFF;
+  padding: 2em;
+}
+#presets .content table {
+  width: 100%;
   height: 100%;
-  width: 100%;
-  border-radius: inherit;
 }
-#tag_table table thead {
+#presets .content table tr {
+  grid-template-columns: 1fr 30% repeat(4, 1fr);
+}
+#presets .content table input {
   width: 100%;
-  background-color: rgba(201, 201, 201, 0.2509803922);
+}
+#presets .content header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#presets .content header h4 {
+  font-size: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
+  color: rgba(44, 48, 46, 0.6);
+}
+#presets .content ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+#presets .content ul li {
   border-radius: 0.5em;
+  padding: 0.5em;
+  background-color: #FFFFFF;
+  box-shadow: 1px 1px 2px rgba(201, 201, 201, 0.2509803922);
+  border: 1px solid rgba(201, 201, 201, 0.2509803922);
 }
-#tag_table table tr {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  row-gap: 1em;
-  border-radius: 0.5em;
-}
-#tag_table table tr:nth-child(even) {
-  background-color: rgba(201, 201, 201, 0.2509803922);
-}
-#tag_table table td,
-#tag_table table th {
+#presets .controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1em;
   padding: 1em;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0.5em;
-}
-#tag_table table .tag_row.actions {
-  align-items: stretch;
-}
-#tag_table table .tag_row__name {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
-#tag_table table .tag_row__name .controls {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 0.5em;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(2px);
-  transition: all 0.2s ease-in-out;
-}
-#tag_table table .tag_row__name .controls.active {
-  pointer-events: unset;
-  opacity: 1;
-  transform: translateX(0);
-}
-#tag_table table .tag_row__name-input {
-  border: none;
-  background-color: transparent;
-}
-#tag_table table tbody {
+  max-width: 60vw;
+  width: 100%;
+  background-color: #FFFFFF;
   border-radius: 0.5em;
+}
+#presets .controls label {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5em;
+}
+#presets .controls .input_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: inherit;
 }
 
 #block_writer {

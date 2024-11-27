@@ -13,7 +13,6 @@ include '../libraries/functions.php';
 
 $rqst = rqst($_POST);
 
-
 $db_tag = mysql_read_all_tags();
 $list = [];
 

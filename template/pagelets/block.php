@@ -20,7 +20,7 @@
             if(isset($block_tags)):
                 foreach($block_tags as $tag):
             ?>
-                <li><?php echo $tag;?></li>
+                <li><?php echo trim($tag);?></li>
             <?php endforeach; endif; ?>
         </ul>
     </div>

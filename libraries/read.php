@@ -1,5 +1,12 @@
 <?php 
 
+// ##################################################################### //
+// ####################### MY SQL READ FUNCTIONS ####################### //
+// ##################################################################### //
+
+
+// ##################################################################### //
+
 function mysql_read_blocks_list() {
 	global $pdo;
 	
@@ -24,6 +31,9 @@ function mysql_read_blocks_list() {
 	return $data;
 }
 
+// ##################################################################### //
+
+
 function mysql_read_tag_xid($name = '') {
 	global $pdo;
 	
@@ -44,6 +54,9 @@ function mysql_read_tag_xid($name = '') {
 	
 	return $data;
 }
+
+// ##################################################################### //
+
 
 function mysql_read_all_tags() {
 	global $pdo;
@@ -70,6 +83,8 @@ function mysql_read_all_tags() {
 	return $data;
 }
 
+// ##################################################################### //
+
 function mysql_read_all_presets() {
 	global $pdo;
 	
@@ -95,25 +110,29 @@ function mysql_read_all_presets() {
 	return $data;
 }
 
+// ##################################################################### //
 
-function block_id() {
+function mysql_read_preset_by_id($preset_id = 0) {
 	global $pdo;
 	
 	mysql_cxn();
+
 	
 	try {
-		$stmt = $pdo->prepare("SELECT COUNT(*) FROM blocks");
+		$stmt = $pdo->prepare("SELECT * FROM preset WHERE preset_id=:preset_id && trashed='n'");
 		
-		$stmt->execute([ ]);
+		$stmt->execute([
+			'preset_id' => intval($preset_id)
+		]);
 
-		$data = $stmt->fetch();
-
+		$data = $stmt->fetch(PDO::FETCH_OBJ);
 	}
 	catch(PDOException $exception){ 
 		echo $exception->getMessage(); 
 	}
 	
-	return $data['COUNT(*)'] + 1;
+	return $data;
 }
+
 
 ?>

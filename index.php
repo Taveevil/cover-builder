@@ -14,6 +14,7 @@
     ?>
     
     <main class="cover_letter_container">
+        <input id="cl_tags" type="text" hidden>
         <article id="cover_letter">
             <?php include 'template/pagelets/cover_letters/template_1/template_1.php' ?>
         </article>

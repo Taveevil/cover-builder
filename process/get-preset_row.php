@@ -1,7 +1,6 @@
-<?php
-
+<?php 
 // ##################################################################### //
-// ######################### UPDATE TAG PROCESS ######################## //
+// ######################## GET TAG ROW PROCESS ######################## //
 // ##################################################################### //
 
 include '../libraries/config.php';
@@ -9,12 +8,9 @@ include '../libraries/read.php';
 include '../libraries/write.php'; 
 include '../libraries/functions.php'; 
 
-
 $rqst = rqst($_POST);
 
-echo mysql_update_tag(
-    $rqst['id'],
-    $rqst['name']
-);
+include '../template/pagelets/table_row-presets.php';
+
 
 ?>

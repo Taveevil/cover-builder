@@ -12,6 +12,6 @@ include '../libraries/functions.php';
 
 $rqst = rqst($_POST);
 
-echo mysql_delete_tag($rqst['tag_id']);
+echo mysql_delete_tag($rqst['id']);
 
 ?>

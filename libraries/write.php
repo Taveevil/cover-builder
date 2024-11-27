@@ -1,5 +1,9 @@
 <?php 
 
+// ##################################################################### //
+// ####################### MYSQL WRITE FUNCTIONS ####################### //
+// ##################################################################### //
+
 function mysql_write_new_block($name = '', $copy = '', $tags = '') {
 	global $pdo;
 	
@@ -23,6 +27,8 @@ function mysql_write_new_block($name = '', $copy = '', $tags = '') {
 	return $id;
 }
 
+// ##################################################################### //
+
 function mysql_update_block($block_id = 0,$name = '', $copy = '', $tags = '') {
 	global $pdo;
 	
@@ -44,6 +50,9 @@ function mysql_update_block($block_id = 0,$name = '', $copy = '', $tags = '') {
 	}	
 	return true;
 }
+
+// ##################################################################### //
+
 
 // This function deletes the block from the database
 function mysql_delete_block($block_id = 0){
@@ -87,6 +96,29 @@ function mysql_delete_tag($tag_id = 0){
 
 }
 
+
+function mysql_delete_preset($preset_id = 0){
+	global $pdo;
+
+	mysql_cxn();
+
+	try{
+		$sql = "UPDATE preset SET trashed='y' WHERE preset_id=:preset_id";
+		
+		$pdo->prepare($sql)->execute([
+			'preset_id' => intval($preset_id)
+		]);
+
+	}catch(PDOException $exception){
+		echo $exception->getMessage(); 
+	}
+
+	return true;
+
+}
+
+// ##################################################################### //
+
 function mysql_write_new_tag($name = '') {
 	global $pdo;
 	
@@ -108,6 +140,8 @@ function mysql_write_new_tag($name = '') {
 	return $id;
 }
 
+// ##################################################################### //
+
 function mysql_update_tag($tag_id = 0,$name = '') {
 	global $pdo;
 	
@@ -126,6 +160,54 @@ function mysql_update_tag($tag_id = 0,$name = '') {
 		echo $exception->getMessage(); 
 	}	
 	return true;
+}
+
+// ##################################################################### //
+
+function mysql_update_preset_name($preset_id = 0,$name = '') {
+	global $pdo;
+	
+	mysql_cxn();
+	
+	try {
+		$sql = "UPDATE preset SET name=:name WHERE preset_id=:preset_id && trashed='n'";
+
+		$pdo->prepare($sql)->execute([
+			'preset_id' => intval($tag_id),
+			'name' => $name,
+		]);
+
+	}
+	catch(PDOException $exception){ 
+		echo $exception->getMessage(); 
+	}	
+	return true;
+}
+
+// ##################################################################### //
+
+function mysql_write_new_preset($name = '', $template_id = 0, $tags = '', $blocks = '') {
+	global $pdo;
+	
+	mysql_cxn();
+	
+	try {
+		$sql = "INSERT INTO preset (name, template_id, tags, blocks) VALUES (:name, :template_id, :tags, :blocks)";
+
+		$pdo->prepare($sql)->execute([
+			'name' => $name,
+			'template_id' => intval($template_id),
+			'tags' => $tags,
+			'blocks' => $blocks
+		]);
+
+		$id = $pdo->lastInsertId();
+	}
+	catch(PDOException $exception){ 
+		echo $exception->getMessage(); 
+	}	
+	
+	return $id;
 }
 
 ?>
