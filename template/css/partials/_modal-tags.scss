@@ -1,5 +1,5 @@
 #tag_table{
-    font-family: $main-font;
+
     
 
     .content{
@@ -53,17 +53,17 @@
             @include flex(row,flex-start,center);
             gap:.5em;
 
+            
+        }
+
+        .tag_row{
+
             &.actions{
                 align-items: stretch;
             }
 
-            &.tag_name{
+            &__name{
                 @include flex(row,flex-start,center);
-
-                .tag_name_input{
-                    border:none;
-                    background-color: transparent;
-                }
                 
                 .controls{
                     @include flex(row,flex-start,center);
@@ -80,6 +80,12 @@
                     }
                 }
             }
+
+            &__name-input{
+                border:none;
+                background-color: transparent;
+            }
+
         }
 
         tbody{

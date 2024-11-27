@@ -1,6 +1,5 @@
 <?php 
-    $doc_name = 'template_1';
-
+    $doc_name = basename(__FILE__, '.php'); ;
 ?>
 
 <link rel="stylesheet" href="<?php echo $site['url_cover_letters'].$doc_name?>/css/style.css">

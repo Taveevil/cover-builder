@@ -6,7 +6,7 @@
     border:1px solid $black;
     background-color: $white;
     color:$black;
-    padding:.5em 1em;
+    padding:.5em;
     cursor: pointer;
     transition:all .2s ease-in-out; 
 
@@ -19,6 +19,10 @@
         color:rgba($black,.4);
         border-color:rgba($black,.4);
         cursor:not-allowed;
+    }
+
+    i{
+        font-size:$step-1;
     }
 }
 

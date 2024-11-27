@@ -1,4 +1,4 @@
-#block-writer{
+#block_writer{
     @include flex(column,center,center);
     
     form{
@@ -22,6 +22,7 @@
                 font-size:$step-2;
                 width:100%;
             }
+    
 
             input{
                 box-shadow: unset;

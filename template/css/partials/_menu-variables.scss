@@ -6,7 +6,7 @@ aside#variables{
     gap:1em;
     padding:1em;
 
-    form{
+    #cl_var{
         width:100%;
         @include flex(column,flex-start,flex-start);
         gap:1em;

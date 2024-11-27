@@ -5,7 +5,7 @@
  * imported by style.scss
  */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-#template-2 {
+.cl_template {
   height: 100%;
   width: 100%;
   display: grid;
@@ -15,34 +15,34 @@
   grid-gap: 1em;
   padding: 1em;
 }
-#template-2 h1,
-#template-2 h2,
-#template-2 h3,
-#template-2 h4,
-#template-2 h5,
-#template-2 h6,
-#template-2 p,
-#template-2 label,
-#template-2 a,
-#template-2 li {
+.cl_template h1,
+.cl_template h2,
+.cl_template h3,
+.cl_template h4,
+.cl_template h5,
+.cl_template h6,
+.cl_template p,
+.cl_template label,
+.cl_template a,
+.cl_template li {
   font-family: "Work Sans", sans-serif !important;
 }
-#template-2 p,
-#template-2 li {
+.cl_template p,
+.cl_template li {
   line-height: 150%;
 }
-#template-2 header {
+.cl_template header {
   grid-area: header;
 }
-#template-2 h1 {
+.cl_template h1 {
   color: black;
 }
-#template-2 h2 {
+.cl_template h2 {
   font-size: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
   font-weight: 400;
   color: red;
 }
-#template-2 .contact {
+.cl_template .contact {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -52,7 +52,7 @@
   padding: 1em;
   color: black;
 }
-#template-2 .contact ul {
+.cl_template .contact ul {
   width: 100%;
   list-style: none;
   display: flex;
@@ -60,12 +60,12 @@
   justify-content: flex-start;
   align-items: flex-start;
 }
-#template-2 .contact ul li {
+.cl_template .contact ul li {
   display: inline-block;
   word-wrap: break-word;
   width: 100%;
 }
-#template-2 .seperator {
+.cl_template .seperator {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -73,21 +73,21 @@
   width: 100%;
   margin-bottom: 1em;
 }
-#template-2 .seperator span {
+.cl_template .seperator span {
   display: block;
 }
-#template-2 .seperator span:nth-child(1), #template-2 .seperator span:nth-child(3) {
+.cl_template .seperator span:nth-child(1), .cl_template .seperator span:nth-child(3) {
   width: 8px;
   height: auto;
   aspect-ratio: 1/1;
   outline: solid 2px black;
 }
-#template-2 .seperator span:nth-child(2) {
+.cl_template .seperator span:nth-child(2) {
   flex: 2;
   background-color: black;
   height: 2px;
 }
-#template-2 .column {
+.cl_template .column {
   width: 100%;
   height: 100%;
   max-height: 100%;
@@ -96,9 +96,9 @@
   justify-content: flex-start;
   align-items: stretch;
 }
-#template-2 #column-1 {
+.cl_template #column-1 {
   grid-area: col-1;
 }
-#template-2 #column-2 {
+.cl_template #column-2 {
   grid-area: col-2;
 }/*# sourceMappingURL=style.css.map */

@@ -1,8 +1,6 @@
-
 <?php 
-
 // ##################################################################### //
-// ######################### NEW BLOCK PROCESS ######################### //
+// ####################### GET TAG TABLE PROCESS ####################### //
 // ##################################################################### //
 
 include '../libraries/config.php';
@@ -10,18 +8,9 @@ include '../libraries/read.php';
 include '../libraries/write.php'; 
 include '../libraries/functions.php'; 
 
-$rqst = rqst($_POST);
 
-mysql_update_block(
-    $rqst['block_id'],
-    $rqst['block_name'],
-    $_POST['block_copy'],
-    $rqst['block_tags']
-);
+$all_tags =  mysql_read_all_tags();
+include '../template/pagelets/modal-tags.php';
 
-// pretty_print($rqst);
-
-header('Location: '.$site['url'].'/index.php');
-exit();
 
 ?>

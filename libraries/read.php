@@ -70,6 +70,31 @@ function mysql_read_all_tags() {
 	return $data;
 }
 
+function mysql_read_all_presets() {
+	global $pdo;
+	
+	mysql_cxn();
+
+	
+	try {
+		$stmt = $pdo->prepare("SELECT * FROM preset WHERE trashed='n'");
+		
+		$stmt->execute([
+		]);
+
+		$data = [];
+
+		while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+			$data[] = $row;
+		}
+	}
+	catch(PDOException $exception){ 
+		echo $exception->getMessage(); 
+	}
+	
+	return $data;
+}
+
 
 function block_id() {
 	global $pdo;

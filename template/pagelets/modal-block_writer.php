@@ -1,14 +1,15 @@
 
-    <div class="modal" id="block-writer">
+    <div class="modal" id="block_writer">
         <div class="content">
-            <form id="writer"method="post">
+            <form id="writer" method="post">
                 <header>
                     <input type="text" id="block_id" name="block_id" hidden readonly>
                     <input name="block_name" id="block_name" type="text" placeholder="Untitled">
-                    <button class="btn writer_toggle"><i class="ph ph-x"></i></button>
+                    <button class="btn btn--modal"><i class="ph ph-x"></i></button>
                 </header>
 
                 <div class="block_content_container">
+
                     <div class="block_copy_container">
                         <textarea name="block_copy" id="block_copy" hidden></textarea>
                         <div class="block_editor"></div>
@@ -31,6 +32,8 @@
                         <input id="create_block" class="btn active" type="submit" value="Save as new block">
                     </div>
                 </div>
+
+
             </form>
         </div>
     </div>

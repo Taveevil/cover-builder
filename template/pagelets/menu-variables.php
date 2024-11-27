@@ -1,10 +1,9 @@
 <?php 
-    $path = 'template/pagelets/cover_letters';
-    $templates =array_slice(scandir($path),2);
+    $templates =array_slice(scandir('template/pagelets/cover_letters'),2);
 ?>
 
 <aside id="variables">
-    <form action="">
+    <section>
         <div class="input_container">
             <label for="template">Cover Letter Templates</label>
             <select name="template" id="template">
@@ -16,9 +15,9 @@
                 <?php endforeach; ?>
             </select>
         </div>
-    </form>
+    </section>
 
-    <form id="cl_var" action="">
+    <section id="cl_var">
         <div class="input_container">
             <label for="company_name">Company name</label>
             <input id="company_name" name="company_name" type="text" placeholder="Fake company co">
@@ -46,12 +45,13 @@
             <label for="position">Position</label>
             <input id="position" name="position" type="text" placeholder="CEO">
         </div>
-    </form>
+    </section>
 
     <div class="controls">
-        <button class="btn manage_tags">Manage tags<i class="ph ph-tag"></i></button>
-        <button class="btn writer_toggle">Write a new block<i class="ph ph-plus-circle"></i></button>
-        <button id="clear" class="btn">Reset Cover Letter<i class="ph ph-backspace"></i></button>
+        <button class="btn btn--modal" data-action="presets">Manage presets<i class="ph ph-paperclip"></i></button>
+        <button class="btn btn--modal" data-action="tag_table">Manage tags<i class="ph ph-tag"></i></button>
+        <button class="btn btn--modal" data-action="block_writer">Write a new block<i class="ph ph-plus-circle"></i></button>
+        <button class="btn btn--clear">Reset Cover Letter<i class="ph ph-backspace"></i></button>
         <button id="download" class="btn">Download PDF<i class="ph ph-download"></i></button>
     </div>
 
