@@ -390,12 +390,38 @@ aside#blocks {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1em;
   background-color: rgba(201, 201, 201, 0.2509803922);
   pointer-events: none;
   opacity: 0;
   transform: translateY(-5px);
   font-family: "Roboto", sans-serif;
   transition: all 0.2s ease-in-out;
+  padding: 10% 20%;
+}
+.modal header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5em;
+  width: 100%;
+  background-color: #FFFFFF;
+  padding: 1em;
+  border-radius: 0.5em;
+  box-shadow: 2px 2px 4px rgba(201, 201, 201, 0.2509803922);
+}
+.modal header #block_name {
+  background-color: unset;
+  border: unset;
+  font-size: clamp(1.08rem, 0.9122rem + 0.8391vw, 1.5625rem);
+  width: 100%;
+}
+.modal header input {
+  box-shadow: unset;
+}
+.modal header button {
+  padding: 1em;
 }
 .modal .content {
   position: relative;
@@ -471,8 +497,6 @@ aside#blocks {
 }
 
 #tag_table .content {
-  max-height: 50vh;
-  height: 50vh;
   overflow-y: scroll;
   overflow-x: hidden;
   border-radius: 0.5em;
@@ -495,25 +519,39 @@ aside#blocks {
   grid-template-columns: 1fr 2fr 1fr;
 }
 #tag_table .tag_maker {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: stretch;
+  align-items: center;
   gap: 0.5em;
+  padding: 1em;
+  background-color: #FFFFFF;
+  border-radius: 0.5em;
 }
 
-#presets {
+#presets header {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 1em;
+}
+#presets header .selected {
+  opacity: 0;
+  transform: translateY(2px);
+  transition: all 0.2s ease-in-out;
+}
+#presets header .selected.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+#presets header h4 {
+  font-size: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
+  color: rgba(44, 48, 46, 0.6);
 }
 #presets .content {
-  max-height: 50vh;
-  height: 50vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: scroll;
   border-radius: 0.5em;
   display: flex;
   flex-direction: column;
@@ -533,17 +571,6 @@ aside#blocks {
 #presets .content table input {
   width: 100%;
 }
-#presets .content header {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-#presets .content header h4 {
-  font-size: clamp(0.9rem, 0.7783rem + 0.6087vw, 1.25rem);
-  color: rgba(44, 48, 46, 0.6);
-}
 #presets .content ul {
   list-style-type: none;
   display: flex;
@@ -560,6 +587,12 @@ aside#blocks {
   box-shadow: 1px 1px 2px rgba(201, 201, 201, 0.2509803922);
   border: 1px solid rgba(201, 201, 201, 0.2509803922);
 }
+#presets .content .row__detach {
+  border-color: red;
+}
+#presets .content .row__detach i {
+  color: red;
+}
 #presets .controls {
   display: flex;
   flex-direction: row;
@@ -567,7 +600,6 @@ aside#blocks {
   align-items: center;
   gap: 1em;
   padding: 1em;
-  max-width: 60vw;
   width: 100%;
   background-color: #FFFFFF;
   border-radius: 0.5em;
@@ -586,6 +618,15 @@ aside#blocks {
   align-items: center;
   gap: inherit;
 }
+#presets .controls .btn__preset_update,
+#presets .controls .btn__preset_detach {
+  opacity: 0;
+}
+#presets .controls .btn__preset_update.active,
+#presets .controls .btn__preset_detach.active {
+  opacity: 1;
+  transform: translateX(2px);
+}
 
 #block_writer {
   display: flex;
@@ -601,30 +642,6 @@ aside#blocks {
   justify-content: flex-start;
   align-items: flex-start;
   gap: 1em;
-}
-#block_writer form header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5em;
-  width: 100%;
-  background-color: #FFFFFF;
-  padding: 1em;
-  border-radius: 0.5em;
-  box-shadow: 2px 2px 4px rgba(201, 201, 201, 0.2509803922);
-}
-#block_writer form header #block_name {
-  background-color: unset;
-  border: unset;
-  font-size: clamp(1.08rem, 0.9122rem + 0.8391vw, 1.5625rem);
-  width: 100%;
-}
-#block_writer form header input {
-  box-shadow: unset;
-}
-#block_writer form header button {
-  padding: 1em;
 }
 #block_writer form .block_content_container {
   display: flex;

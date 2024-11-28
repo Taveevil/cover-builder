@@ -186,7 +186,7 @@ function mysql_update_preset_name($preset_id = 0,$name = '') {
 
 // ##################################################################### //
 
-function mysql_write_new_preset($name = '', $template_id = 0, $tags = '', $blocks = '') {
+function mysql_write_new_preset($name = '', $template_id = '', $tags = '', $blocks = '') {
 	global $pdo;
 	
 	mysql_cxn();
@@ -196,7 +196,7 @@ function mysql_write_new_preset($name = '', $template_id = 0, $tags = '', $block
 
 		$pdo->prepare($sql)->execute([
 			'name' => $name,
-			'template_id' => intval($template_id),
+			'template_id' => $template_id,
 			'tags' => $tags,
 			'blocks' => $blocks
 		]);
@@ -208,6 +208,30 @@ function mysql_write_new_preset($name = '', $template_id = 0, $tags = '', $block
 	}	
 	
 	return $id;
+}
+
+
+function mysql_update_preset($preset_id = '', $name = '', $template_id = '', $tags = '', $blocks = '') {
+	global $pdo;
+	
+	mysql_cxn();
+	
+	try {
+		$sql = "UPDATE preset SET name=:name, template_id=:template_id, tags=:tags, blocks=:blocks WHERE preset_id=:preset_id";
+
+		$pdo->prepare($sql)->execute([
+			'preset_id' => intval($preset_id),
+			'name' => $name,
+			'template_id' => $template_id,
+			'tags' => $tags,
+			'blocks' => $blocks
+		]);
+	}
+	catch(PDOException $exception){ 
+		echo $exception->getMessage(); 
+	}
+	
+	return true;
 }
 
 ?>

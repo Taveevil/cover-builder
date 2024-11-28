@@ -5,7 +5,7 @@
         $block_tags = [];
     }
 ?>
-<div class="block" data-block="<?php echo $block->block_id;?>">
+<div class="block" data-block="<?php if(isset($block->id) || $block->block_id) echo $block->block_id;?>">
     <div class="block__info">
         <h4 class="block__name">
         <?php echo $block->name ?>
@@ -17,7 +17,7 @@
         </div>
         <ul class="block__tags">
             <?php 
-            if(isset($block_tags)):
+            if($block_tags):
                 foreach($block_tags as $tag):
             ?>
                 <li><?php echo trim($tag);?></li>
@@ -25,6 +25,10 @@
         </ul>
     </div>
     <div class="block__copy" readonly>
-        <?php echo $block->copy ?>
+        <?php 
+            if(isset($block->copy))
+            echo $block->copy 
+        
+        ?>
     </div>
 </div>

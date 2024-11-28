@@ -1,7 +1,7 @@
-<?php 
+<?php
 
 // ##################################################################### //
-// ######################### NEW BLOCK PROCESS ######################### //
+// ######################### UPDATE TAG PROCESS ######################## //
 // ##################################################################### //
 
 include '../libraries/config.php';
@@ -9,7 +9,7 @@ include '../libraries/read.php';
 include '../libraries/write.php'; 
 include '../libraries/functions.php'; 
 
-// Scrub our data
+
 $rqst = rqst($_POST);
 
 if(isset($rqst['tags'])){
@@ -24,11 +24,12 @@ if(isset($rqst['blocks'])){
     $blocks = '';
 }
 
-echo mysql_write_new_preset(
+echo mysql_update_preset(
+    $rqst['id'],
     $rqst['name'],
     $rqst['template_id'],
     $tags,
-    $blocks,
+    $blocks
 );
 
 ?>

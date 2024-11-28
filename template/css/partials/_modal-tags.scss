@@ -1,8 +1,6 @@
 #tag_table{
 
     .content{
-        max-height:50vh;
-        height:50vh;
         overflow-y: scroll;
         overflow-x: hidden;
         border-radius: .5em;
@@ -26,8 +24,12 @@
     }
 
     .tag_maker{
-        @include flex(row,flex-start,stretch);
+        width:100%;
+        @include flex(row,flex-start,center);
         gap:.5em;
+        padding:1em;
+        background-color: $white;
+        border-radius: .5em;
     }
     
 

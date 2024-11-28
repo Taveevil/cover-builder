@@ -134,5 +134,29 @@ function mysql_read_preset_by_id($preset_id = 0) {
 	return $data;
 }
 
+// ##################################################################### //
+
+function mysql_read_block_by_id($block_id = 0) {
+	global $pdo;
+	
+	mysql_cxn();
+
+	
+	try {
+		$stmt = $pdo->prepare("SELECT * FROM blocks WHERE block_id=:block_id && trashed='n'");
+		
+		$stmt->execute([
+			'block_id' => intval($block_id)
+		]);
+
+		$data = $stmt->fetch(PDO::FETCH_OBJ);
+	}
+	catch(PDOException $exception){ 
+		echo $exception->getMessage(); 
+	}
+	
+	return $data;
+}
+
 
 ?>

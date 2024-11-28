@@ -52,7 +52,10 @@
         <button class="btn btn--modal" data-action="tag_table">Manage tags<i class="ph ph-tag"></i></button>
         <button class="btn btn--modal" data-action="block_writer">Write a new block<i class="ph ph-plus-circle"></i></button>
         <button class="btn btn--clear">Reset Cover Letter<i class="ph ph-backspace"></i></button>
-        <button id="download" class="btn">Download PDF<i class="ph ph-download"></i></button>
+        <div class="input_container">
+            <button id="download" class="btn">Download PDF<i class="ph ph-download"></i></button>
+            <button class="btn btn--copy"><i class="ph ph-copy"></i></button>
+        </div>
     </div>
 
 

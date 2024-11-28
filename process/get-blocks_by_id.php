@@ -1,6 +1,6 @@
 <?php 
 // ##################################################################### //
-// ######################## GET TAG ROW PROCESS ######################## //
+// ###################### GET BLOCKS BY ID PROCESS ##################### //
 // ##################################################################### //
 
 include '../libraries/config.php';
@@ -9,9 +9,12 @@ include '../libraries/write.php';
 include '../libraries/functions.php'; 
 
 $rqst = rqst($_POST);
-$preset = mysql_read_preset_by_id($rqst['id']);
 
-include '../template/pagelets/table_row-presets.php';
+$blocks_arr = $rqst['blocks'];
 
+foreach($blocks_arr as $block_id){
+    $block = mysql_read_block_by_id($block_id);
+    include '../template/pagelets/block.php';
+}
 
 ?>

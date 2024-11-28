@@ -1,5 +1,7 @@
 
 $(document).on('DOMContentLoaded',function(){
+    sessionStorage.clear('preset_cache');
+    sessionStorage.clear('preset_bool');
     resizeCover();
 
     $(window).keydown(function(event){
@@ -63,13 +65,24 @@ let cl_col_init = {
 
 function getCoverLetterTags(){
     // To do that we make an array of the tags attached to the blocks
-    let tags = $('#cover_letter .block__tags li',this).map(function(i,tag) {
+    let tags = $('.block__tags li','#cover_letter').map(function(i,tag) {
         return $(tag).html();
     }).get();
     
     // and we get the current value of the cover letter tags (if it exists)
     // and make each item seperated by a comma into a key
-    let cl_tags = $('#cl_tags').val().split(',');
+    let cl_tags = $('#cl_tags').val();
+    
+    // debugger
+
+    if(cl_tags && tags){
+        cl_tags = cl_tags.split(',');
+    }else if(tags.length){
+        $('#cl_tags').val(tags.toString());
+        return tags;
+    }else{
+        return;
+    }
 
     // once we have those we concatenate them into one array
     const concatArr = cl_tags.concat(tags)
@@ -82,8 +95,10 @@ function getCoverLetterTags(){
     const result = concatArr.filter((item, idx) => concatArr.indexOf(item || true) === idx);
     $('#cl_tags').val(result.toString());
 
+
     return result;
 }
+
 
 // This function scales our cover letter down or up whenever we resize the window
 // this way we keep our aspect ratio
@@ -113,16 +128,7 @@ function resizeCover(){
 $(document).on('keyup', function(event) {
     
     if( event.key === 'Escape'){
-        let modal = $('.modal');
-
-        if($(modal).hasClass('active')){
-            // remove the active class
-            $(modal).removeClass('active');
-            // and after the animation is done remove the modal from the document
-            $(modal).on('transitionend webkitTransitionEnd oTransitionEnd',function(){
-                $(modal).remove();
-            });
-        }
+        toggleModal();
     }
 });
 
@@ -207,22 +213,42 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
     e.preventDefault();
     // We get the value stored within the button
     let action  = $(this).attr('data-action');
+    if(toggleModal(action)){
+        // if edit returns as true
+        // we copy all the data from the selected bot
+        // and append the data to it's appropriate fields
+        let block = $(this).closest('.block');
+        let id = $(block).attr('data-block');
+        let copy = $('.block__copy',block).html();
+        let name = $('.block__name',block).html();
+        let tags = $('.block__tags li',block).toArray().map(li => li.innerHTML);
+
+        for(let i = 0; i < tags.length; i++){
+            writerCreateTag(tags[i].trim());
+        }
+        
+        $('#block_writer #block_id').val(id);
+        $('#block_writer #block_name').val(name.trim());
+        $('#block_writer .block_editor .ql-editor').html(copy.trim());
+        $('.btn#update_block').addClass('active');
+    }
+
+});
+
+function toggleModal(action){
+    let bool;
     // we get the existing modal
     let modal = $('.modal');
-
-    // we check if this is an edit or not 
-    const edit = $(this).hasClass('btn--edit');
-    let block;
-
-    // if it is we set the block variable to our block parent
-    if(edit){
-        block = $(this).closest('.block');
-    }
 
     // if a modal already exists do the following
     if(modal.length){
         // if it's active
         if($(modal).hasClass('active')){
+            
+            if($('.modal').attr('id') == 'presets'){
+                sessionStorage.setItem('preset_cache',$('.modal').html());
+            }
+            
             // remove the active class
             $(modal).removeClass('active');
             // and after the animation is done remove the modal from the document
@@ -253,6 +279,7 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
             case 'block_writer':
                 // Get out writer modal
                 $.ajax({
+                    async:false,
                     method:'GET',
                     dataType:'html',
                     url:'template/pagelets/modal-block_writer.php'
@@ -260,6 +287,7 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
                 .done(function(html){
                     $('body').prepend(html);
                     initWriter();
+                    bool = true;
                     $('.modal').addClass('active');
 
                     // When a block is created
@@ -272,28 +300,9 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
                         const tags = $('.tag_content .tag').toArray().map(t => t.innerHTML);
                         $('#block_tags').val(tags.join(', '));
                     });
-
-
-                    // if edit returns as true
-                    // we copy all the data from the selected bot
-                    // and append the data to it's appropriate fields
-                    if(edit){
-                        let id = $(block).attr('data-block');
-                        let copy = $(block).find('.block__copy').html();
-                        let name = $(block).find('.block__name').html();
-                        let tags = $(block).find('.block__tags li').toArray().map(li => li.innerHTML);
-                        
-                        for(let i = 0; i < tags.length; i++){
-                            writerCreateTag(tags[i].trim());
-                        }
-                        
-                        $('#block_writer #block_id').val(id);
-                        $('#block_writer #block_name').val(name.trim());
-                        $('#block_writer .block_editor .ql-editor').html(copy.trim());
-                        $('.btn#update_block').addClass('active');
-                    }
-
-                });    
+                    
+                });  
+                
             break;
             case 'presets':
                 $.ajax({
@@ -305,15 +314,31 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
                     setTimeout(() => {
                         $('.modal').addClass('active');
                     }, 10);
+
+                    if(sessionStorage.getItem('preset_cache')){
+                        $('.modal').html(sessionStorage.getItem('preset_cache'));
+                    }
+
+                    if(sessionStorage.getItem('preset_bool')){
+                        $('.btn__preset_update').addClass('active');
+                    }
                 });  
             break;
             default:
-                // Do something if anything before this is not true
+                if($(modal).hasClass('active')){
+                    // remove the active class
+                    $(modal).removeClass('active');
+                    // and after the animation is done remove the modal from the document
+                    $(modal).on('transitionend webkitTransitionEnd oTransitionEnd',function(){
+                        $(modal).remove();
+                    });
+                }
             break;
         }
     }
+    return bool;
+}
 
-});
 
 // Whenever the varibles are changed in the form
 // also change them everywhere else
@@ -560,16 +585,127 @@ $('body').on('click','.row__delete',function(){
         .done(function(response){
             // remove it from the table
             $(row).remove();
-            // if successful alert us that the tag has been deleted
-            alert(name + ' has been deleted');
+
         });
     }
+
+});
+
+$('body').on('click','.row__apply',function(){
+
+
+    if($('.btn__preset_update')){
+        $('.btn__preset_update').addClass('active');
+    }
+
+    // If there are any buttons that are currently applied
+    // reset them
+    $('table .row__detach').addClass('row__apply');
+    $('i','table .row__detach').removeClass();
+    $('i','table .row__detach').addClass('ph ph-hand-pointing');
+    $('table .row__detach').removeClass('row__detach');
+ 
+
+
+    // save our current table in cl_cache, so when we call this window again it saves what we did
+    sessionStorage.setItem('cl_cache',$('.cover_letter_container').html());
+
+    // Get our variables
+    let row = $(this).closest('.row');
+    let path = $('.row__template_id',row).html();
+    let blocks =  $('.row__blocks li',row).toArray().map(li => li.innerHTML);
+    let name  =$('.row__name-input',row).val();
+    let btn = $(this);
+    let id =  $('.row__id',row).html().trim();
+
+    // Apply our indicator so we know which template was picked
+    $('#cover_letter').attr('data-preset',id)
+    $('.selected').addClass('active');
+    $('.preset__name').html(name);
+    $('#preset_name-input').val(name);
+    $(row).addClass('active');
+
+    // remove any excess spaces and make any space between the string into "_"
+    path = path.trim().replace(/ /g,"_");
+
+    // Send a post request to get our saved template
+    $.ajax({
+        method:"POST",
+        url:"process/get-cover_letter.php",
+        data:{
+            name: path,
+        },
+        dataType:"html"
+    }).done(function(msg){
+        // get our returned cover letter
+        $('#cover_letter').html(msg);
+        // re-init the sortable widget within the cover letter
+        $('.cl_content').sortable(cl_col_init);
+ 
+        // Once we get our template we can now get the content
+        // we send our array of block ids to get-blocks_by_id.php
+        $.ajax({
+            method:"POST",
+            url:"process/get-blocks_by_id.php",
+            data:{
+                blocks: blocks,
+            },
+            dataType:"html"
+        }).done(function(html){
+            // and spit out the html to the .cl_content within the coverletter
+            $('.cl_content').html(html);
+            // and we convert the apply button to a detach button
+            $(btn).removeClass('row__apply');
+            $('i',btn).removeClass();
+            $('i',btn).addClass('ph ph-x');
+            $(btn).addClass('row__detach');
+            
+            // and set our tags based on the blocks inside
+            getCoverLetterTags();
+            $('.btn__preset_detach').addClass('active')
+        });
+    });
+});
+
+$('body').on('click','.row__detach',function(){
+
+    if(sessionStorage.getItem('cl_cache')){
+        $('.cover_letter_container').html(sessionStorage.getItem('cl_cache'));
+    }
+
+    $('.selected').removeClass('active');
+    $('.preset__name').html('');
+    $('#preset_name-input').val('');
+
+    if($('.btn__preset_update')){
+        $('.btn__preset_update').removeClass('active');
+    }
+
+    if($('.btn__preset_detach')){
+        $('.btn__preset_detach').removeClass('active');
+    }
+
+    if($(this).hasClass('btn__preset_detach')){
+        $('table .row__detach').addClass('row__apply');
+        $('i','table .row__detach').removeClass();
+        $('i','table .row__detach').addClass('ph ph-hand-pointing');
+        $('table .row__detach').removeClass('row__detach');
+        return;
+    }
+
+
+
+    $(this).removeClass('row__detach');
+    $('i',this).removeClass();
+    $('i',this).addClass('ph ph-hand-pointing');
+    $(this).addClass('row__apply');
 
 });
 
 $('body').on('click','.row__edit',function(){
     // After pressing the tag button we grab the parent container
     let row = $(this).closest('.row');
+  
     // We save the current name in a cache just in case we change our mind
     let name_cache = $('.row__name-input',row).val();
 
@@ -602,6 +738,8 @@ $('body').on('click','.row__edit',function(){
 
     };
 
+    
+
 
     //If enter or the save tag button are pressed, Then we call out ajaxUpdateRow functino
     // to save our tag in our database
@@ -616,59 +754,122 @@ $('body').on('click','.row__edit',function(){
 
     $('.row__save',row).on('click',function(){
         done(true);
-    
+        
     });
 
     // Otherwise we just reset our tagrow back to normal
     $('.row__reset',row).on('click',function(){
         done(false);
     });
-
 });
 
-$('body').on('click','.btn__preset_save',function(){
+$('body').on('click','.btn__preset_save , .btn__preset_update',function(){
     let name = $('#preset_name-input').val();
     let template_id = $('.cl_template').attr('id');
-    let blocks = $('#cover_letter .cl_content .block').map(function(i,block) {
+    let blocks = $('.cl_content .block').map(function(i,block) {
         return $(block).attr('data-block');
     }).get();
     let tags = getCoverLetterTags();
+    let preset_id = $('#cover_letter').attr('data-preset');
 
-
-    $.ajax({
-        method:'POST',
-        url:'process/new-preset.php',
-        data:{
-            name: name,
-            template_id: template_id,
-            blocks: blocks,
-            tags: tags
-        },
-    })
-    .fail(function(response){
-        alert('Uh oh! Something went wrong');
-        console.log(response);
-    })
-    .done(function(response){
-        console.log(response);
-
+    if($(this).hasClass('btn__preset_save')){
         $.ajax({
-            method: 'POST',
-            url:'process/get-preset_row.php',
-            dataType:'html',
+            method:'POST',
+            url:'process/new-preset.php',
             data:{
-                id: response,
-            }
-        }).done(function(html){
-            $('#presets tbody').append(html);
+                name: name,
+                template_id: template_id,
+                blocks: blocks,
+                tags: tags
+            },
         })
-        
-    });
+        .fail(function(response){
+            alert('Uh oh! Something went wrong');
+            console.log(response);
+        })
+        .done(function(response){
+
+            $.ajax({
+                    method: 'POST',
+                    url:'process/get-preset_row.php',
+                    dataType:'html',
+                    data:{
+                        id: response,
+                    }
+                }).done(function(html){
+                    $('#presets tbody').append(html);
+                    console.log(html);
+                });   
+            });
+
+    }else if($(this).hasClass('btn__preset_update')){
+        $.ajax({
+            method:'POST',
+            url:'process/update-preset.php',
+            data:{
+                id: preset_id,
+                name: name,
+                template_id: template_id,
+                blocks: blocks,
+                tags: tags
+            },
+        })
+        .fail(function(response){
+            alert('Uh oh! Something went wrong');
+            console.log(response);
+        })
+        .done(function(response){
+            console.log(response);
+            let row = $('#presets .row.active');
+            $('.row__name-input',row).val($('#preset_name-input').val());
+            $('.row__template-id',row).html(template_id);
+            $('.row__blocks ul',row).html('');
+            blocks.forEach(function(block){
+                $('.row__blocks ul',row).append('<li>'+block+'</li>')
+            }); 
+            $('.row__tags ul',row).html('');
+            tags.forEach(function(tag){
+                $('.row__tags ul',row).append('<li>'+tag+'</li>')
+            }); 
+
+        });
+    }
+    
+
 });
 
 // ====================================================== //
 // =================== MISC FUNCTIONS =================== //
 // ====================================================== //
+
+$('.btn--copy').on('click',function(){
+   
+    var $temp = $("<textarea>");
+    $("body").append($temp);
+    
+    var test = "";
+    let prev = null;
+    $($('.cl_content .block__copy >*')).each(function(index, item){
+        if($(item).children('br').is('br') || $(prev).children('br').is('br')){
+            test = test;
+        }else{
+            test = test + "\n";
+        }
+    
+        test = test+ "\n" + $(item).html().trim() ;
+
+        prev = item;
+        console.log(item);
+    });
+    
+    test = test.replace(/<\/?[^>]+(>|$)/g, "");
+    console.log(test);
+    
+    $temp.val(test.trim()).select();
+    document.execCommand("copy");
+    $temp.remove();
+});
+
 
 // This function decodes html incoming from PHP
 function decodeHtml(html) {

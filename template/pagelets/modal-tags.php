@@ -6,15 +6,11 @@
 ?>
 
 <div class="modal" id="tag_table">
+    <header> 
+        <h3>Tag Manager</h3>
+        <button class="btn btn--modal"><i class="ph ph-x"></i></button>
+    </header>
     <div class="content">
-        <header> 
-            <h3>Tag Manager</h3>
-            <button class="btn btn--modal"><i class="ph ph-x"></i></button>
-        </header>
-        <div class="tag_maker">
-            <input type="text" class="tag_maker__input" placeholder="Tag Name">
-            <button class="btn tag_maker__create">Create tag <i class="ph ph-plus-circle"></i></button>
-        </div>
         <table>
                 <thead>
                     <tr>
@@ -29,5 +25,9 @@
                 }?>
                 </tbody>
         </table>
+    </div>
+    <div class="tag_maker">
+            <input type="text" class="tag_maker__input" placeholder="Tag Name">
+            <button class="btn tag_maker__create">Create tag <i class="ph ph-plus-circle"></i></button>
     </div>
 </div>

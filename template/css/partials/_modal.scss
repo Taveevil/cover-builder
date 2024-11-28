@@ -3,12 +3,41 @@
     z-index:99999;
     inset:0;
     @include flex(column,center,center);
+    gap:1em;
     background-color: $accent;
     pointer-events: none;
     opacity: 0;
     transform: translateY(-5px);
     font-family: $main-font;
     transition: all .2s ease-in-out;
+    padding:10% 20%;
+
+    header{
+        @include flex(row,space-between,center);
+        gap:.5em;
+        width:100%;
+        background-color: $white;
+        padding:1em;
+        border-radius: .5em;
+        box-shadow: 2px 2px 4px $accent;
+
+        #block_name{
+            background-color: unset;
+            border:unset;
+            font-size:$step-2;
+            width:100%;
+        }
+
+
+        input{
+            box-shadow: unset;
+        }
+
+        button{
+            padding:1em;
+        }
+    }
+
 
     .content{
         position:relative;

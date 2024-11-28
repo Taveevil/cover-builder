@@ -1,13 +1,10 @@
 <?php 
 
-
-    if(isset($rqst)){
-        $preset = mysql_read_preset_by_id($rqst['id']);
-    }
-    
     $id = $preset->preset_id;
     $name = $preset->name;
-    $tags = explode(',',$preset->tags);
+    if(isset($preset->tags)){
+        $tags = explode(',',$preset->tags);
+    }
     $blocks = explode(',',$preset->blocks);
 
 ?>
@@ -18,14 +15,14 @@
             <?php echo $preset->preset_id; ?>
         </td>
         <td class="row__name">
-            <input readonly="" class="row__name-input" type="text" value="<?php echo $name; ?>">
+            <input readonly="" class="row__name-input" type="text" value="<?php if(!is_null($name))echo $name; ?>">
             <div class="input_container">
                 <button class="btn row__save"><i class="ph ph-check-fat"></i></button>
                 <button class="btn row__reset"><i class="ph ph-x"></i></button>
             </div>
         </td>
         <td class="row__template_id">
-            <?php echo $preset->template_id; ?>
+            <?php echo str_replace('_',' ',$preset->template_id); ?>
         </td>
         <td class="row__blocks">
             <ul>

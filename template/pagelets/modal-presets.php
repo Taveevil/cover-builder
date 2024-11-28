@@ -6,12 +6,12 @@
 ?>
 
 <div class="modal" id="presets">
+    <header> 
+        <h3>Preset Manager</h3>
+        <h4 class="selected">( Selected: <span class="preset__name"></span> )</h4>
+        <button class="btn btn--modal"><i class="ph ph-x"></i></button>
+    </header>
     <div class="content">
-        <header> 
-            <h3>Preset Manager</h3>
-            <h4 class="selected">( Selected: <span class="preset__name"></span> )</h4>
-            <button class="btn btn--modal"><i class="ph ph-x"></i></button>
-        </header>
         <table>
                 <thead>
                     <tr>
@@ -36,8 +36,9 @@
             <input type="text" id="preset_name-input" name="preset_name-input">
         </label>
         <div class="input_container">
-            <button class="btn btn__preset_save" id="">Save as new preset <i class="ph ph-floppy-disk"></i></button>
+            <button class="btn btn__preset_save">Save as new preset <i class="ph ph-floppy-disk"></i></button>
             <button class="btn btn__preset_update">Update preset <i class="ph ph-arrow-circle-right"></i></button>
+            <button class="btn btn__preset_detach row__detach">Detach preset<i class="ph ph-x"></i></button>
         </div>
     </div>
 </div>
