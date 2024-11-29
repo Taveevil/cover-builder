@@ -40,10 +40,10 @@ let cl_col_init = {
     receive: function(event,ui){
         let cl_content = $('.cl_content').get(0);
 
-        $('.cl_content .block').each(function(){
-            let copy = $(this).find('.block__copy').get(0);
-            $(copy).html(decodeHtml($(copy).html()));
-        });
+        // $('.cl_content .block').each(function(){
+        //     let copy = $(this).find('.block__copy').get(0);
+        //     $(copy).html(decodeHtml($(copy).html()));
+        // });
 
         // For our preset function we need to assign a string of our tags seperated by commas
 
@@ -162,7 +162,16 @@ function writerCreateTag(tag){
     });
 }
 
+$('body').on('click','.btn--insert',function(e){
+    e.preventDefault();
+    let action = $(this).attr('data-value');
+    let insert  = '<span class="'+action+'">'+ action.replace(/_/g, ' ');
 
+    let string = $('.ql-editor .focus').text();
+    let before = string.substring(0, pos);
+    let after  = string.substring(pos, string.length);
+    $('.ql-editor .focus').text(before + insert +'</span>' + after);
+});
 
 function initWriter(){
     new Quill('.block_editor', {
@@ -217,20 +226,25 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
         // if edit returns as true
         // we copy all the data from the selected bot
         // and append the data to it's appropriate fields
-        let block = $(this).closest('.block');
-        let id = $(block).attr('data-block');
-        let copy = $('.block__copy',block).html();
-        let name = $('.block__name',block).html();
-        let tags = $('.block__tags li',block).toArray().map(li => li.innerHTML);
 
-        for(let i = 0; i < tags.length; i++){
-            writerCreateTag(tags[i].trim());
+        if($(this).hasClass('btn--edit')){
+            let block = $(this).closest('.block');
+            let id = $(block).attr('data-block');
+            let copy = DOMPurify.sanitize($('.block__copy',block).html());
+
+            console.log(copy);
+            let name = $('.block__name',block).html();
+            let tags = $('.block__tags li',block).toArray().map(li => li.innerHTML);
+
+            for(let i = 0; i < tags.length; i++){
+                writerCreateTag(tags[i].trim());
+            }
+            
+            $('#block_writer #block_id').val(id);
+            $('#block_writer #block_name').val(name.trim());
+            $('#block_writer .block_editor .ql-editor').text(copy.trim());
+            $('.btn#update_block').addClass('active');
         }
-        
-        $('#block_writer #block_id').val(id);
-        $('#block_writer #block_name').val(name.trim());
-        $('#block_writer .block_editor .ql-editor').html(copy.trim());
-        $('.btn#update_block').addClass('active');
     }
 
 });
@@ -397,10 +411,16 @@ $('select#template').on('change',function(){
 
 
 
-$('.btn--delete').on('click',function(){
+$('body').on('click','.btn--delete',function(){
     // get the parent container
+
+
     let block = $(this).closest('.block');
     let id = $(block).attr('data-block');
+
+    if(!window.confirm('Are you sure you want to delete '+$('.block__name',block).html().trim()+'?')){
+        return;
+    }
 
     // send a POST requst to delete-block.php
     $.ajax({
@@ -705,7 +725,6 @@ $('body').on('click','.row__detach',function(){
 $('body').on('click','.row__edit',function(){
     // After pressing the tag button we grab the parent container
     let row = $(this).closest('.row');
-  
     // We save the current name in a cache just in case we change our mind
     let name_cache = $('.row__name-input',row).val();
 
@@ -842,8 +861,15 @@ $('body').on('click','.btn__preset_save , .btn__preset_update',function(){
 // =================== MISC FUNCTIONS =================== //
 // ====================================================== //
 
+$('#cl_var input').on('input',function(){
+    let value  = $(this).val();
+    let target = $(this).attr('id');
+
+    $('.'+target).html(value);
+
+});
+
 $('.btn--copy').on('click',function(){
-   
     var $temp = $("<textarea>");
     $("body").append($temp);
     
@@ -856,13 +882,13 @@ $('.btn--copy').on('click',function(){
             test = test + "\n";
         }
     
-        test = test+ "\n" + $(item).html().trim() ;
+        test = test+ "\n" + $(item).text().trim() ;
 
         prev = item;
         console.log(item);
     });
     
-    test = test.replace(/<\/?[^>]+(>|$)/g, "");
+    // test = test.replace(/<\/?[^>]+(>|$)/g, "");
     console.log(test);
     
     $temp.val(test.trim()).select();
@@ -882,3 +908,62 @@ function decodeHtml(html) {
 function isOverflown(element) {
     return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
 }
+
+let pos;
+
+$('body').on('keydown keyup mousedown mouseup','.ql-editor',function(e){
+    let element = document.getSelection().anchorNode;
+    if(!element){
+        return;
+    }
+    
+    var caretOffset = 0;
+    var doc = element.ownerDocument || element.document;
+    var win = doc.defaultView || doc.parentWindow;
+    var sel;
+    if (typeof win.getSelection != "undefined") {
+        sel = win.getSelection();
+        if (sel.rangeCount > 0) {
+            var range = win.getSelection().getRangeAt(0);
+            var preCaretRange = range.cloneRange();
+            preCaretRange.selectNodeContents(element);
+            preCaretRange.setEnd(range.endContainer, range.endOffset);
+            caretOffset = preCaretRange.toString().length;
+        }
+    } else if ( (sel = doc.selection) && sel.type != "Control") {
+        var textRange = sel.createRange();
+        var preCaretTextRange = doc.body.createTextRange();
+        preCaretTextRange.moveToElementText(element);
+        preCaretTextRange.setEndPoint("EndToEnd", textRange);
+        caretOffset = preCaretTextRange.text.length;
+    }
+    pos = caretOffset;
+
+    console.log(pos);
+    getSelectionStart();
+    
+});
+
+function getSelectionStart() {
+    var node = document.getSelection().anchorNode;
+    $('.focus').removeClass('focus');
+    if(node){
+
+        if(node.nodeType == 3){
+            $(node.parentNode).addClass('focus');
+        } else{
+            $(node).addClass('focus');
+        }
+        
+        return (node.nodeType == 3 ? node.parentNode : node);
+    }
+}
+
+// ##################################################################### //
+// ########################## LOGIN PAGE CODE ########################## //
+// ##################################################################### //
+
+$('body').on('click','.btn--return',function(e){
+    e.preventDefault();
+    window.location = 'index.php';
+});

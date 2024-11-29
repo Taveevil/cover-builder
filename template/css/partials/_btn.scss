@@ -29,7 +29,8 @@
 
 select,
 input[type=text],
-input[type=tel]{
+input[type=tel],
+input[type=password]{
     box-shadow: 0 1px 5px rgba($accent, 0.1);
     border-radius:.5em;
     border:1px solid $black;

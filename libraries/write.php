@@ -4,15 +4,16 @@
 // ####################### MYSQL WRITE FUNCTIONS ####################### //
 // ##################################################################### //
 
-function mysql_write_new_block($name = '', $copy = '', $tags = '') {
+function mysql_write_new_block($user_id = 0,$name = '', $copy = '', $tags = '') {
 	global $pdo;
 	
 	mysql_cxn();
 	
 	try {
-		$sql = "INSERT INTO blocks (name, copy, tags) VALUES (:name, :copy, :tags)";
+		$sql = "INSERT INTO blocks (user_id,name, copy, tags) VALUES (:user_id,:name, :copy, :tags)";
 
 		$pdo->prepare($sql)->execute([
+			'user_id' => intval($user_id),
 			'name' => $name,
 			'copy' => $copy,
 			'tags' => $tags
@@ -186,15 +187,16 @@ function mysql_update_preset_name($preset_id = 0,$name = '') {
 
 // ##################################################################### //
 
-function mysql_write_new_preset($name = '', $template_id = '', $tags = '', $blocks = '') {
+function mysql_write_new_preset($user_id= 0, $name = '', $template_id = '', $tags = '', $blocks = '') {
 	global $pdo;
 	
 	mysql_cxn();
 	
 	try {
-		$sql = "INSERT INTO preset (name, template_id, tags, blocks) VALUES (:name, :template_id, :tags, :blocks)";
+		$sql = "INSERT INTO preset (template_id,name, template_id, tags, blocks) VALUES (:user_id,:name, :template_id, :tags, :blocks)";
 
 		$pdo->prepare($sql)->execute([
+			'user_id' => intval($user_id),
 			'name' => $name,
 			'template_id' => $template_id,
 			'tags' => $tags,

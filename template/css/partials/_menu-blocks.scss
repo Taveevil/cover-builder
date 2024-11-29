@@ -4,4 +4,8 @@ aside#blocks{
     gap:1em;
     @include flex(column,flex-start,flex-start);
     overflow-y:scroll ;
+
+    span{
+        font-weight:800;
+    }
 }

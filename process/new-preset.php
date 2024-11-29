@@ -25,6 +25,7 @@ if(isset($rqst['blocks'])){
 }
 
 echo mysql_write_new_preset(
+    $_SESSION['user_id'],
     $rqst['name'],
     $rqst['template_id'],
     $tags,

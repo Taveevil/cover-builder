@@ -1,0 +1,25 @@
+#login{
+    height:100%;
+    width:100%;
+    margin:auto auto;
+
+    form{
+        header{
+            @include flex(column,center,center);
+        }
+
+        @include flex(column,flex-start,center);
+        width:min-content;
+        margin:auto auto;
+        gap:1em;
+        background-color: $white;
+        padding:2em;
+        border-radius: .5em;
+
+        .input_container{
+            @include flex(row,flex-start,center);
+            gap:.5em;
+        }
+    }    
+
+}

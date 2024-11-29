@@ -4,9 +4,8 @@
     include 'libraries/write.php'; 
     include 'libraries/functions.php'; 
     include 'template/header.php';
-
-    $presets;
 ?>
+
 <body>
     
     <?php

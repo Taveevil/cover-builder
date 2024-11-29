@@ -42,6 +42,20 @@ aside#variables{
         .btn{
             width:100%;
         }
+        
+        .save_container{
+            width:100%;
+            @include flex(row,flex-start,stretch);
+            gap:.5em;
+
+            #download{
+                flex:4;
+            }
+
+            .btn--copy{
+                flex:1;
+            }
+        }
     }
 }
 

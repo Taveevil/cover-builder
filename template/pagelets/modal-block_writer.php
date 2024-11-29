@@ -9,10 +9,17 @@
                 </header>
 
                 <div class="block_content_container">
-
                     <div class="block_copy_container">
                         <textarea name="block_copy" id="block_copy" hidden></textarea>
                         <div class="block_editor"></div>
+                        <div class="input_container">
+                            <button class="btn btn--insert" data-value="company_name">Company Name <i class="ph ph-plus-circle"></i></button>
+                            <button class="btn btn--insert" data-value="company_address">Company Address <i class="ph ph-plus-circle"></i></button>
+                            <button class="btn btn--insert" data-value="manager_name">Manager Name <i class="ph ph-plus-circle"></i></button>
+                            <button class="btn btn--insert" data-value="phone">Phone # <i class="ph ph-plus-circle"></i></button>
+                            <button class="btn btn--insert" data-value="email">Email <i class="ph ph-plus-circle"></i></button>
+                            <button class="btn btn--insert" data-value="position">Position <i class="ph ph-plus-circle"></i></button>
+                        </div>
                     </div>
                     
                     <div class="tags">

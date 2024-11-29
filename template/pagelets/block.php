@@ -27,8 +27,7 @@
     <div class="block__copy" readonly>
         <?php 
             if(isset($block->copy))
-            echo $block->copy 
-        
+            echo html_entity_decode($block->copy);
         ?>
     </div>
 </div>

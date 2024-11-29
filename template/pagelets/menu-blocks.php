@@ -1,5 +1,5 @@
 <?php 
-$block_arr = mysql_read_blocks_list();
+    $block_arr = mysql_read_blocks_list_by_id($_SESSION['user_id']);
 ?>
 
 

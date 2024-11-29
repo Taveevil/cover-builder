@@ -13,6 +13,7 @@ include '../libraries/functions.php';
 $rqst = rqst($_POST);
 
 mysql_write_new_block(
+    $_SESSION['user_id'],
     $rqst['block_name'],
     $rqst['block_copy'],
     $rqst['block_tags']
