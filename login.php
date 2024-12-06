@@ -8,7 +8,7 @@
 ?>
 
 <main id="login">
-	<?php if($_SESSION['user_id'] !== 1) : ?>
+	<?php if($_SESSION['user_id'] != 1) : ?>
 	<form action="<?php echo $site['url_process']; ?>/do-login.php" method="post">
 		<header>
 			<span><i class="ph ph-key"></i></span>

@@ -35,8 +35,6 @@ if (!empty($rqst['username'])) {
 			// Password is correct, so create a session
 			$_SESSION['user_id'] = $login_user->user_id;
 
-			echo $_SESSION['user_id'];
-
 			// Send logged in user to home page
 			header('Location: '.$site['url']);
 			die();

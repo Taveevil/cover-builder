@@ -965,5 +965,5 @@ function getSelectionStart() {
 
 $('body').on('click','.btn--return',function(e){
     e.preventDefault();
-    window.location = 'index.php';
+    window.location = '/';
 });
