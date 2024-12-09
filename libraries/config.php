@@ -77,7 +77,7 @@ function mysql_cxn() {
 // Session stuff
 session_start();
 
-if($_SESSION['user_id'] !== 1){
+if(!isset($_SESSION['user_id'])){
 	$_SESSION['user_id'] = 2;
 }
 

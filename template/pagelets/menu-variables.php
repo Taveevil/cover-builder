@@ -9,10 +9,11 @@
             <select name="template" id="template">
                 <?php 
                     foreach($templates as $template):
+                        if($template !== 'template_BLANK'):
                 ?>
                 <option value="<?php echo $template?>"><?php echo str_replace(['.php','_'],' ',$template)?></option>
 
-                <?php endforeach; ?>
+                <?php endif; endforeach; ?>
             </select>
         </div>
     </section>

@@ -19,7 +19,14 @@ mysql_update_block(
     $rqst['block_tags']
 );
 
-// pretty_print($rqst);
+$tags = array_map('trim',explode(',',$rqst['block_tags']));
+$db_tags = array_column(mysql_read_all_tags(),'name');
+$new_tags = array_diff($tags,$db_tags);
+
+foreach($new_tags as $tag){
+    mysql_write_new_tag($tag);
+}
+
 
 header('Location: '.$site['url'].'/index.php');
 exit();

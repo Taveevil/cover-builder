@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+/* 
+ * In this file you should declare any global variables
+ * For example: brand colours, typefaces, etc.
+ * imported by style.scss
+ */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+.cl_template {
+  padding: 10%;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-areas: "header header" "col-1 col-2";
+  grid-template-rows: min-content minmax(auto, 100%);
+  grid-template-columns: 30% minmax(auto, 100%);
+  grid-gap: 1em;
+  font-family: "Work Sans", sans-serif !important;
+}
+.cl_template p,
+.cl_template li {
+  line-height: 150%;
+}
+.cl_template header {
+  grid-area: header;
+}
+.cl_template h1 {
+  font-size: 3em;
+  color: #3670B7;
+}
+.cl_template h2 {
+  font-size: 1.5em;
+  font-weight: 400;
+  color: #E74425;
+}
+.cl_template .contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5em;
+  max-width: 100%;
+  padding: 1em;
+  color: #3670B7;
+}
+.cl_template .contact ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.cl_template .contact ul li {
+  display: inline-block;
+  word-wrap: break-word;
+  width: 100%;
+}
+.cl_template .seperator {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1em;
+}
+.cl_template .seperator span {
+  display: block;
+}
+.cl_template .seperator span:nth-child(1), .cl_template .seperator span:nth-child(3) {
+  width: 8px;
+  height: auto;
+  aspect-ratio: 1/1;
+  border: solid 2px #3670B7;
+}
+.cl_template .seperator span:nth-child(2) {
+  flex: 2;
+  background-color: #3670B7;
+  height: 2px;
+}
+.cl_template .column {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+.cl_template #column-1 {
+  grid-area: col-1;
+}
+.cl_template #column-2 {
+  grid-area: col-2;
+}/*# sourceMappingURL=style.css.map */

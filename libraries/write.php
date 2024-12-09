@@ -174,7 +174,7 @@ function mysql_update_preset_name($preset_id = 0,$name = '') {
 		$sql = "UPDATE preset SET name=:name WHERE preset_id=:preset_id && trashed='n'";
 
 		$pdo->prepare($sql)->execute([
-			'preset_id' => intval($tag_id),
+			'preset_id' => intval($preset_id),
 			'name' => $name,
 		]);
 
@@ -193,7 +193,7 @@ function mysql_write_new_preset($user_id= 0, $name = '', $template_id = '', $tag
 	mysql_cxn();
 	
 	try {
-		$sql = "INSERT INTO preset (template_id,name, template_id, tags, blocks) VALUES (:user_id,:name, :template_id, :tags, :blocks)";
+		$sql = "INSERT INTO preset (user_id,name,template_id,tags,blocks) VALUES (:user_id,:name, :template_id, :tags, :blocks)";
 
 		$pdo->prepare($sql)->execute([
 			'user_id' => intval($user_id),

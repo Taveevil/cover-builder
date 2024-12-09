@@ -242,6 +242,7 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
             
             $('#block_writer #block_id').val(id);
             $('#block_writer #block_name').val(name.trim());
+            $('#block_writer #block_tags').val(tags);
             $('#block_writer .block_editor .ql-editor').text(copy.trim());
             $('.btn#update_block').addClass('active');
         }
@@ -458,13 +459,13 @@ $('body').on('click','#block_writer .submit_container .btn',function(e){
 // TAG TABLE HEADER
 // On click or on enter send the value of the input 
 // to our AJAX and create an element on th tag table
-$('#writerCreateTag').on('click',function(e){
+$('body').on('click','#create_tag',function(e){
     e.preventDefault();
     let tag_name =  $('#tag_input').val();
     writerCreateTag(tag_name);
 });
 
-$('.tag_input').on('keyup',function(e){
+$('body').on('keyup','#tag_input',function(e){
     e.preventDefault();
     let tag_name =  $('#tag_input').val();
     if(e.which === 13){
@@ -477,6 +478,7 @@ function ajaxUpdateRow(row){
 
     let url;
     let bool;
+    let item = $(row).closest('.modal');
 
     switch ($(row).closest('.modal').attr('id')) {
         case 'presets':
@@ -487,9 +489,11 @@ function ajaxUpdateRow(row){
         break;
     }
 
+
+
     // first we find our tag's id and name
-    let row_id = $('.row__id',row).html();
-    let row_name = $('.row__name-input',row).val();
+    let row_id = $('.row__id',item).html();
+    let row_name = $('.row__name-input',item).val();
 
 
     // Then we send a POST request to our update-tag.php process
@@ -507,21 +511,21 @@ function ajaxUpdateRow(row){
     .done(function(response){
         // if successful then we alert the user that the task has been completed
         // and return true so that we can move on to the next step
-        alert($('.row__name-input',row).val() + ' has been updated');
+        alert($('.row__name-input',item).val() + ' has been updated');
         bool = true;
     });
 
     return bool;
 }
 
-$('.tag_maker__input').on('keyup',function(e){
+$('body').on('keyup','.tag_maker__input',function(e){
     if(e.which === 13){
         let name = $(this).val();
         AJAXCreateTag(name);
     }
 });
 
-$('.tag_maker__create').on('click',function(){
+$('body').on('click','.tag_maker__create',function(){
     let name = $(this).siblings('.tag_maker__input').val();
     AJAXCreateTag(name);
 });
@@ -624,8 +628,6 @@ $('body').on('click','.row__apply',function(){
     $('i','table .row__detach').removeClass();
     $('i','table .row__detach').addClass('ph ph-hand-pointing');
     $('table .row__detach').removeClass('row__detach');
- 
-
 
     // save our current table in cl_cache, so when we call this window again it saves what we did
     sessionStorage.setItem('cl_cache',$('.cover_letter_container').html());
@@ -773,7 +775,7 @@ $('body').on('click','.row__edit',function(){
 
     $('.row__save',row).on('click',function(){
         done(true);
-        
+        ajaxUpdateRow($(this));
     });
 
     // Otherwise we just reset our tagrow back to normal
@@ -807,6 +809,8 @@ $('body').on('click','.btn__preset_save , .btn__preset_update',function(){
             console.log(response);
         })
         .done(function(response){
+
+            console.log(response);
 
             $.ajax({
                     method: 'POST',
@@ -966,4 +970,51 @@ function getSelectionStart() {
 $('body').on('click','.btn--return',function(e){
     e.preventDefault();
     window.location = '/';
+});
+
+// ##################################################################### //
+// ######################### TAG FILTERING CODE ######################## //
+// ##################################################################### //
+
+$('body').on('click','.filter__tag',function(){
+    if($(this).hasClass('active')){
+        $(this).removeClass('active');
+    }else{
+        $(this).addClass('active');
+    }
+    filterCheck();
+});
+
+function filterCheck(){
+    let filter_tags = $('.filter__tag.active').toArray().map(tag => tag.innerText);
+    let blocks = $('#blocks .block');
+
+    $(blocks).each(function(idx,item){
+        let tags = $('.block__tags li',item).toArray().map(tag => tag.innerText);
+        if(filter_tags.length > 0){
+            if(!containsFilter(filter_tags,tags)){
+                $(item).addClass('hide');
+            }else{
+                $(item).removeClass('hide');
+            }
+        }else{
+            $(item).removeClass('hide');
+        }
+    });
+}
+
+function containsFilter(arr1, arr2) {
+    // Use the jQuery grep function to filter out values in arr1 that exist in arr2
+    var result = $.grep(arr1, function(value) {
+        return $.inArray(value, arr2) !== -1;
+    });
+
+    // If the result array is not empty, it means at least one element is found in both arrays
+    return result.length > 0;
+};
+
+$('body').on('keyup','',function(){
+
+
+    
 });

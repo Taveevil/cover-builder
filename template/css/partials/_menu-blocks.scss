@@ -1,6 +1,5 @@
-aside#blocks{
+aside#blocks_menu{
     max-height:100vh;
-    padding:1em;
     gap:1em;
     @include flex(column,flex-start,flex-start);
     overflow-y:scroll ;

@@ -4,11 +4,10 @@
     include 'libraries/write.php'; 
     include 'libraries/functions.php'; 
     include 'template/header.php';
-
 ?>
 
 <main id="login">
-	<?php if($_SESSION['user_id'] != 1) : ?>
+	<?php if($_SESSION['user_id'] !== 1) : ?>
 	<form action="<?php echo $site['url_process']; ?>/do-login.php" method="post">
 		<header>
 			<span><i class="ph ph-key"></i></span>
@@ -37,8 +36,8 @@
 			<h1>Logout</h1>
 		</header>
 		<div class="input_container">
-			<button class="btn btn--return"> Go Back</button>
-			<input class="btn" type="submit">
+			<button class="btn btn--return">Go Back</button>
+			<input class="btn" type="submit" value="Log Out">
 		</div>
 	</form>
 	<?php endif; ?>
