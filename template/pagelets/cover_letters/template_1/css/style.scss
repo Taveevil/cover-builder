@@ -1,10 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import '../../../../css/partials/globals';
 
+$white:#FFFFFF;
+$black: #0C0E0E;
+$primary: #3070b7;
+$secondary: #e54726;
+$tertiary:#F3AC1D;
+
 .cl_template{
-    padding:10%;
+    font-family:"IBM Plex Sans", sans-serif !important;
     height:100%;
     width:100%;
+    
+    padding:10%;
     display:grid;
     grid-template-areas: 
         'header header'
@@ -13,11 +21,8 @@
     grid-template-rows: min-content minmax(auto,100%);
     grid-template-columns: 30% minmax(auto,100%);
     grid-gap:1em;
-    font-family: "Work Sans", sans-serif !important;
 
 
-    $primary: #3670B7;
-    $secondary: #E74425;
 
 
     p,
@@ -30,14 +35,34 @@
     }
 
     h1{
-        font-size:3em;
+        font-size:4em;
         color:$primary;
     }
 
-    h2{
-        font-size:1.5em;
-        font-weight:400;
-        color:$secondary;
+    .titles{
+        @include flex(row,flex-start,center);
+        gap:1em;
+        color:$white;
+        
+        span{
+            font-weight: 800;
+            font-size:$step--1;
+            text-transform: uppercase;
+            border-radius: 50vmax;
+            padding:.5em 1em;
+
+            &:nth-child(1){
+                background-color: $secondary;
+            }
+            &:nth-child(2){
+                background-color: $tertiary;
+            }
+            &:nth-child(3){
+                background-color: $primary;
+            }
+            
+        }
+
     }
 
     .contact{ 

@@ -9,7 +9,12 @@
             <span>Tavee</span>
             <span>Villamar</span>
         </h1>
-        <h2>Certified Coding guy</h2>
+        <div class="titles">
+            <span>Web Developer</span>
+            <span>UI/UX</span>
+            <span>Motion Graphics Artist</span>
+        </div>
+
     </header>
     <div class="column" id="column-1">
         <div class="seperator">
@@ -32,7 +37,7 @@
             <ul>
                 <li>Tavee Villamar</li>
                 <li>hello@tavee.ca</li>
-                <li>(204)228-7253</li>
+                <li>(204) 228-7253</li>
             </ul>
         </div>
     </div>

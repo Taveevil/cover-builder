@@ -1,0 +1,7 @@
+
+
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/tavedmol/public_html/cover-builder/
+    - /bin/cp -R * $DEPLOYPATH.

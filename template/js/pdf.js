@@ -28,7 +28,7 @@ function makePDF(){
     try{
         var opt = {
             filename:     'Tavee_Villamar_'+position+'Cover_Letter',
-            image:        { type: 'jpeg', quality: 5 },
+            image:        { type: 'jpeg', quality: 10 },
             html2canvas:  { scale: 5,},
             jsPDF:        { size:'letter',orientation: 'portrait' }
         };

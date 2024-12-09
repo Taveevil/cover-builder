@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 /* 
  * In this file you should declare any global variables
  * For example: brand colours, typefaces, etc.
@@ -6,15 +6,15 @@
  */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 .cl_template {
-  padding: 10%;
+  font-family: "IBM Plex Sans", sans-serif !important;
   height: 100%;
   width: 100%;
+  padding: 10%;
   display: grid;
   grid-template-areas: "header header" "col-1 col-2";
   grid-template-rows: min-content minmax(auto, 100%);
   grid-template-columns: 30% minmax(auto, 100%);
   grid-gap: 1em;
-  font-family: "Work Sans", sans-serif !important;
 }
 .cl_template p,
 .cl_template li {
@@ -24,13 +24,32 @@
   grid-area: header;
 }
 .cl_template h1 {
-  font-size: 3em;
-  color: #3670B7;
+  font-size: 4em;
+  color: #3070b7;
 }
-.cl_template h2 {
-  font-size: 1.5em;
-  font-weight: 400;
-  color: #E74425;
+.cl_template .titles {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1em;
+  color: #FFFFFF;
+}
+.cl_template .titles span {
+  font-weight: 700;
+  font-size: clamp(0.625rem, 0.5641rem + 0.3043vw, 0.8rem);
+  text-transform: uppercase;
+  border-radius: 50vmax;
+  padding: 0.5em 1em;
+}
+.cl_template .titles span:nth-child(1) {
+  background-color: #e54726;
+}
+.cl_template .titles span:nth-child(2) {
+  background-color: #F3AC1D;
+}
+.cl_template .titles span:nth-child(3) {
+  background-color: #3070b7;
 }
 .cl_template .contact {
   display: flex;
@@ -40,7 +59,7 @@
   gap: 0.5em;
   max-width: 100%;
   padding: 1em;
-  color: #3670B7;
+  color: #3070b7;
 }
 .cl_template .contact ul {
   width: 100%;
@@ -70,11 +89,11 @@
   width: 8px;
   height: auto;
   aspect-ratio: 1/1;
-  border: solid 2px #3670B7;
+  border: solid 2px #3070b7;
 }
 .cl_template .seperator span:nth-child(2) {
   flex: 2;
-  background-color: #3670B7;
+  background-color: #3070b7;
   height: 2px;
 }
 .cl_template .column {
