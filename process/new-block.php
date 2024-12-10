@@ -27,7 +27,7 @@ foreach($new_tags as $tag){
     mysql_write_new_tag($tag);
 }
 
-// header('Location: '.$site['url'].'/index.php');
-// exit();
+header('Location: '.$site['url'].'/index.php');
+exit();
 
 ?>
