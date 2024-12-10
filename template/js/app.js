@@ -19,6 +19,10 @@ $(document).on('DOMContentLoaded',function(){
         placeholder: "sortable-placeholder",
         helper:'clone',
         handle: '.handle',
+        receive:function(event,ui){
+            let block = ui.item[0];
+
+        },
     });
 
     // we initialize our sortable column
@@ -40,13 +44,9 @@ let cl_col_init = {
     receive: function(event,ui){
         let cl_content = $('.cl_content').get(0);
 
-        // $('.cl_content .block').each(function(){
-        //     let copy = $(this).find('.block__copy').get(0);
-        //     $(copy).html(decodeHtml($(copy).html()));
-        // });
+        console.log(cl_content);
 
         // For our preset function we need to assign a string of our tags seperated by commas
-
         // Check if the existing content in the cl_content box
         // WITH the placeholder is overflowing
         // if it is then we cancel the request to move the block over
@@ -232,7 +232,26 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
             let id = $(block).attr('data-block');
             let copy = DOMPurify.sanitize($('.block__copy',block).html());
 
-            console.log(copy);
+            $('#block_writer .block_editor .ql-editor').html('');
+
+            if($(copy).contents().length > 0){
+                copy = $(copy).contents().unwrap();
+                $(copy).each(function(idx,text){
+                    if(text.nodeName == 'SPAN'){
+                        $('#block_writer .block_editor .ql-editor').append(document.createTextNode(text.outerHTML));
+                    }else{
+                        $('#block_writer .block_editor .ql-editor').append(text);
+                    }
+                    
+                });
+            }else{
+                $('#block_writer .block_editor .ql-editor').append(copy.trim());
+            }
+
+   
+
+
+
             let name = $('.block__name',block).html();
             let tags = $('.block__tags li',block).toArray().map(li => li.innerHTML);
 
@@ -243,7 +262,6 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
             $('#block_writer #block_id').val(id);
             $('#block_writer #block_name').val(name.trim());
             $('#block_writer #block_tags').val(tags);
-            $('#block_writer .block_editor .ql-editor').text(copy.trim());
             $('.btn#update_block').addClass('active');
         }
     }
