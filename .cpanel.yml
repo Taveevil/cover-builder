@@ -4,4 +4,11 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/tavedmol/public_html/cover-builder/
-    - /bin/cp -R * $DEPLOYPATH.
+    - /bin/cp -R libraries $DEPLOYPATH.
+    - /bin/cp -R node_modules $DEPLOYPATH.
+    - /bin/cp -R process $DEPLOYPATH.
+    - /bin/cp -R template $DEPLOYPATH.
+    - /bin/cp -R index.php $DEPLOYPATH.
+    - /bin/cp -R login.php $DEPLOYPATH.
+    - /bin/cp -R package.json $DEPLOYPATH.
+
