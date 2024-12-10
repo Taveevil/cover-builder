@@ -15,7 +15,7 @@ $rqst = rqst($_POST);
 mysql_write_new_block(
     $_SESSION['user_id'],
     $rqst['block_name'],
-    $rqst['block_copy'],
+    $_POST['block_copy'],
     $rqst['block_tags']
 );
 
@@ -27,7 +27,7 @@ foreach($new_tags as $tag){
     mysql_write_new_tag($tag);
 }
 
-header('Location: '.$site['url'].'/index.php');
-exit();
+// header('Location: '.$site['url'].'/index.php');
+// exit();
 
 ?>

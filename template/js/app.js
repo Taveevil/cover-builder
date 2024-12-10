@@ -217,6 +217,8 @@ function initWriter(){
 }
 
 
+
+
 // Whenever the modal buttons OR edit buttons are clicked do the following
 $('body').on('click','.btn--modal, .btn--edit',function(e){
     e.preventDefault();
@@ -248,10 +250,6 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
                 $('#block_writer .block_editor .ql-editor').append(copy.trim());
             }
 
-   
-
-
-
             let name = $('.block__name',block).html();
             let tags = $('.block__tags li',block).toArray().map(li => li.innerHTML);
 
@@ -266,6 +264,16 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
         }
     }
 
+});
+
+$('body').on('keyup',function(){
+
+        // When a block is created we scrub our data using DOMPurify
+        const clean = DOMPurify.sanitize($('.ql-editor').html());
+        $('#block_copy').val(clean);
+
+        console.log($('#block_copy').val());
+    
 });
 
 function toggleModal(action){
