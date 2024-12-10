@@ -230,33 +230,45 @@ $('body').on('click','.btn--modal, .btn--edit',function(e){
         // and append the data to it's appropriate fields
 
         if($(this).hasClass('btn--edit')){
+            // We grab the block this button is connected to
             let block = $(this).closest('.block');
+            // and we get the block id and other necessary variables
             let id = $(block).attr('data-block');
+            let name = $('.block__name',block).html();
+            let tags = $('.block__tags li',block).toArray().map(li => li.innerHTML);
+            // We grab the copy attached to block and sanitize it
             let copy = DOMPurify.sanitize($('.block__copy',block).html());
 
+            // we empty the block editor
             $('#block_writer .block_editor .ql-editor').html('');
 
+            // Then we check if the copy we grabbed is just a string (contains no html tags)
             if(typeof copy == 'string'){
+                // if so we append that string to the block editor
                 $('#block_writer .block_editor .ql-editor').append(copy.trim());
+                // Otherwise we check if it does contain any html and if it does;
             }else if($(copy).contents().length > 0){
+                // we unwrap each element
                 copy = $(copy).contents().unwrap();
                 $(copy).each(function(idx,text){
+                    // and one by one we check if the element is a span
                     if(text.nodeName == 'SPAN'){
+                        // if it is then we turn it into a string so we can see the span tags
                         $('#block_writer .block_editor .ql-editor').append(document.createTextNode(text.outerHTML));
                     }else{
+                        // otherwise we append like normal
                         $('#block_writer .block_editor .ql-editor').append(text);
                     }
                     
                 });
             }
 
-            let name = $('.block__name',block).html();
-            let tags = $('.block__tags li',block).toArray().map(li => li.innerHTML);
-
+            // for each tag we create a tag for the ui
             for(let i = 0; i < tags.length; i++){
                 writerCreateTag(tags[i].trim());
             }
             
+            // and apply all the information to the front end
             $('#block_writer #block_id').val(id);
             $('#block_writer #block_name').val(name.trim());
             $('#block_writer #block_tags').val(tags);
