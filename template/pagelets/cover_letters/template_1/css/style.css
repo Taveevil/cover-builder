@@ -13,7 +13,7 @@
   display: grid;
   grid-template-areas: "header header" "col-1 col-2";
   grid-template-rows: min-content minmax(auto, 100%);
-  grid-template-columns: 30% minmax(auto, 100%);
+  grid-template-columns: 35% minmax(auto, 100%);
   grid-gap: 1em;
 }
 .cl_template p,

@@ -1,5 +1,3 @@
-
-
 $('#download.btn').on('click',function(){
     let size_cache = $('#cover_letter').css('transform');
     $('#cover_letter').css('transform','scale(1)');
